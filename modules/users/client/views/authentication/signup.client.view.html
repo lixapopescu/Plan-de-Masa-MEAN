@@ -1,0 +1,70 @@
+<div data-ng-controller="AuthenticationController">
+    <div>
+        <form name="userForm" data-ng-submit="signup()" novalidate>
+            <div layout="column" layout="start start">
+                <div>
+                    <md-input-container>
+                        <input type="email" id="email" name="email" data-ng-model="credentials.email" placeholder="Email" autofocus>
+                    </md-input-container>
+                </div>
+                <div>
+                    <md-input-container>
+                        <input type="password" id="password" name="password" data-ng-model="credentials.password" placeholder="Parola">
+                    </md-input-container>
+                </div>
+                <div layout="row" layout="space-between center">
+                    <div>
+                        <md-button class="md-primary md-raised no-capitalize action-button" type="submit" aria-label="Creaz&#259; cont">Creaz&#259; cont</md-button>
+                    </div>
+                    <div>
+                        <md-button data-ui-sref="authentication.signin({email: email})" class="md-primary md-raised md-hue-1 no-capitalize second-action-button" aria-label="Am deja cont">Am deja cont</md-button>
+                    </div>
+                </div>
+                <div data-ng-show="error" class="text-center text-danger">
+                    <span data-ng-if="errorCode == 11010">
+                        <span data-ng-bind="error"></span>
+                        <strong><a data-ui-sref="authentication.signin">Intră în cont</a></strong>
+                    </span>
+                    <span ng-if="errorCode != 11010">
+                        <strong data-ng-bind="error"></strong>
+                    </span>
+                </div>
+            </div>
+            <!--             <fieldset>
+                <div class="form-group">
+                    <label for="firstName">Nume</label>
+                    <input type="text" required id="firstName" name="firstName" class="form-control"
+                           data-ng-model="credentials.firstName" placeholder="First Name">
+                </div>
+                                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" name="lastName" class="form-control"
+                           data-ng-model="credentials.lastName" placeholder="Last Name">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" data-ng-model="credentials.email" placeholder="Email">
+                </div>
+                                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control"
+                           data-ng-model="credentials.username" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Parola</label>
+                    <input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+                </div>
+                <div class="text-center form-group">
+                    <button type="submit" class="btn btn-large btn-primary">&Icirc;nregistrare</button>
+                    &nbsp; or&nbsp;
+                    <a data-ui-sref="authentication.signin" class="show-signup">Am deja cont</a>
+                </div>
+                <div data-ng-show="error" class="text-center text-danger">
+                    <strong data-ng-bind="error"></strong>
+                </div>
+            </fieldset>
+ -->
+        </form>
+    </div>
+    <!-- </div> -->
+</div>

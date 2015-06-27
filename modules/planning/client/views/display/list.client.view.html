@@ -1,0 +1,40 @@
+<div data-ng-controller="ListController" class="listwrapper" id="list">
+    <div class="masonry">
+        <div ng-repeat="category in list | orderBy: '-ingredients.length'" class="well">
+            <div class="category-title" ng-click="toggleFolded(category)">
+                <i ng-if="category.folded" class="fa fa-plus"></i>
+                <i ng-if="!category.folded" class="fa fa-minus"></i> {{category._id}} ({{category.ingredients.length-countBought(category.ingredients)}})
+            </div>
+            <md-divider></md-divider>
+            <div class="items">
+                <div ng-repeat="product in category.ingredients | orderBy: '+ name'" class="product">
+                    <span ng-if="!product.bought" ng-click="toggleBought(product)">
+                        <i class="fa fa-square-o fa-fw"></i> {{product.name}}
+                        <span ng-if="product.total > 0">: {{product.total}} {{product.um}}</span>
+                    </span>
+                    <span ng-if="product.bought" ng-click="toggleBought(product)">
+                        <i class="fa fa-check-square-o fa-fw"></i>
+                        <span class="cumparat">{{product.name}}</span>
+                        <span class="cumparat" ng-if="product.total > 0">: {{product.total}} {{product.um}}</span>
+                    </span>
+                    <span ng-if="(category.folded || product.unfoldable) && det.abbrev" ng-repeat="det in product.details | orderBy: '+abbrev'">
+                        <span class="fa-stack fa-lg reteta-abreviere-logo">
+                            <i class="fa fa-circle-thin fa-stack-1x"></i>
+                            <i class="fa fa-stack-1x">{{det.abbrev}}</i>
+                        </span>
+                    </span>
+                    <div ng-if="!category.folded && !product.unfoldable" ng-repeat="det in product.details | orderBy: '+abbrev'">
+                        <li>
+                            <span ng-if="det.abbrev" class="fa-stack fa-lg reteta-abreviere-logo">
+                                <i class="fa fa-circle-thin fa-stack-1x"></i>
+                                <i class="fa fa-stack-1x">{{det.abbrev}}</i>
+                            </span> 
+                            {{det.quantity}} {{det.um}}
+                            <span ng-if="det.comment" class="ingredient-comentariu">({{det.comment}})</span>
+                        </li>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

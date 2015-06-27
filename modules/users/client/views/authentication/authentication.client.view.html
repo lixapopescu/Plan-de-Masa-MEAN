@@ -1,0 +1,35 @@
+<section class="md-whiteframe-z1" layout="column" layout-align="center center" layout-padding  data-ng-controller="AuthenticationDialogController">
+    <div>
+        <h3>{{welcomeMessage}}</h3>
+    </div>
+    <br>
+    <div layout="row" layout-align="center space-around">
+        <div>
+            <md-button class="md-fab md-raised facebook-button" href="/api/auth/facebook" target="_self" aria-label="Inregistrare cu Facebook">
+                <i class="mdi mdi-facebook"></i>
+            </md-button>
+        </div>
+        <div>
+            <md-button class="md-fab md-raised googleplus-button" href="/api/auth/google" target="_self" aria-label="Inregistrare cu Google+">
+                <i class="mdi mdi-google-plus"></i>
+            </md-button>
+        </div>
+
+        <!--        <a href="/api/auth/twitter" class="undecorated-link">
+            <img src="/modules/users/img/buttons/twitter.png">
+        </a> -->
+        <!--   <a href="/api/auth/google" class="undecorated-link" target="_self">
+            <img src="/modules/users/img/buttons/google.png">
+        </a> -->
+        <!--        <a href="/api/auth/linkedin" class="undecorated-link">
+            <img src="/modules/users/img/buttons/linkedin.png">
+        </a>
+        <a href="/api/auth/github" class="undecorated-link">
+            <img src="/modules/users/img/buttons/github.png">
+        </a> -->
+    </div>
+    <br>
+    <br>
+    <md-divider></md-divider>
+    <div ui-view></div>
+</section>

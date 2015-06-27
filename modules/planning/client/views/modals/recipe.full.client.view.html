@@ -1,0 +1,45 @@
+<div layout-sm="column" layout-gt-sm="column" layout-md="column" layout-gt-md="row">
+    <!-- Image -->
+    <div layout="row" layout-gt-md="column" layout-align="center center" flex-gt-md="50">
+        <picture>
+            <source media="(max-width:620px)" ng-srcset="{{recipe.picture.sm}}">
+                <source media="(min-width:620px) and (max-width:960px)" ng-srcset="{{recipe.picture.md}}">
+                    <source media="(min-width:960px) and (max-width:1200px)" ng-srcset="{{recipe.picture.lg}}">
+                        <source media="(min-width:1200px)" ng-srcset="{{recipe.picture.gt_lg}}">
+                            <img ng-src="{{recipe.image}}" alt="{{recipe.title}}" class="recipe-modal-image">
+        </picture>
+    </div>
+    <md-divider></md-divider>
+    <!-- Text -->
+    <div layout="column" class="recipe-text">
+        <div layout-sm="column" layout-gt-sm="row" layout-md="row" layout-gt-md="column" layout-align="start start">
+            <div flex="33" flex-sm="100" flex-gt-md="100">
+                <div ng-repeat="categ_ingredient in recipe.ingredients">
+                    <span ng-if="recipe.ingredients.length > 1" class="instruction-for">{{categ_ingredient.for_what}}</span>
+                    <ul>
+                        <li ng-repeat="ingredient in categ_ingredient.list | orderBy: '+category'">
+                            {{ingredient.name}}
+                            <span ng-if="ingredient.quantity">: {{ingredient.quantity}} {{ingredient.um}} </span>
+                            <span ng-if="ingredient.comment" class="ingredient-comment">({{ingredient.comment}})</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div flex-sm="100" flex="66" flex-gt-md="100">
+                <div ng-repeat="instruction in recipe.instructions | orderBy: '+order'">
+                    {{instruction.order + 1}}.
+                    <span ng-if="!!instruction.for_what" class="instruction-for">{{instruction.for_what}}</span> {{instruction.text}}
+                </div>
+            </div>
+        </div>
+        <div layout="row" layout-align="end end" ng-if="!!recipe.origin.url">
+            <div>
+                <i class="fa fa-road"></i>
+                <span>Vezi toata povestea retetei pe </span>
+                <a href="{{recipe.origin.url}}" target="_blank">
+                    <span>{{recipe.origin.copyright}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

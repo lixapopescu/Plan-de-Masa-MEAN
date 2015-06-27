@@ -1,0 +1,114 @@
+.content {
+    margin-top: 50px;
+}
+
+.undecorated-link:hover {
+    text-decoration: none;
+}
+
+[ng\:cloak],
+[ng-cloak],
+[data-ng-cloak],
+[x-ng-cloak],
+.ng-cloak,
+.x-ng-cloak {
+    display: none !important;
+}
+
+.ng-invalid.ng-dirty {
+    border-color: #FA787E;
+}
+
+.ng-valid.ng-dirty {
+    border-color: #78FA89;
+}
+
+.header-profile-image {
+    opacity: 0.8;
+    height: 28px;
+    width: 28px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.open .header-profile-image,
+a:hover .header-profile-image {
+    opacity: 1;
+}
+
+.user-header-dropdown-toggle {
+    padding-top: 11px !important;
+    padding-bottom: 11px !important;
+}
+
+md-icon > .mdi {
+    font-size: 1.5rem;
+}
+.menu md-icon {
+    font-size: 2rem;
+}
+
+.menu-user {
+    width: auto !important;
+    text-transform: none !important;
+    border-radius: 0 !important;
+}
+
+.facebook-button {
+    background-color: #3B5998 !important;
+    color: white !important;
+    font-size: 1.5rem !important;
+}
+
+.googleplus-button {
+    background-color: #D14836 !important;
+    color: white !important;
+    font-size: 1.5rem !important;
+}
+
+.no-capitalize {
+    text-transform: none !important;
+}
+
+.action-button {
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    font-size: 1.2em;
+}
+
+.second-action-button {
+    padding: 1rem 1rem 1rem 1rem;
+    line-height: 100%;
+}
+
+.header-action {
+	font-size: 2rem !important;
+}
+
+.logobox{
+    font-size: 0.2rem;
+    /*display: none !important;*/
+}
+.logobox a{
+    color: #000000;
+	color: rgba(0, 0, 0, 0.870588);
+}
+.logobox a:active {
+	text-decoration: none;
+}
+.logobox img {
+	height: 3rem;
+}
+
+a {
+    color: #000000;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+  background-image: linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+}
