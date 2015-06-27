@@ -38,13 +38,6 @@ angular.module('planning').controller('GeneratePlanController', ['$scope', 'Rand
             $scope.dailyPlans[i].recipe = data;
         }
 
-        function putRandomRecipeFactory(i, data) {
-            console.log('factory', i, data);
-            return function() {
-                putRandomRecipe(data);
-            };
-        }
-
         $scope.generatePlan = function(interval, globalPlan, dailyPlans) {
             console.log('generatePlan', interval, dailyPlans);
             var duration = moment.duration(interval.endDate.diff(interval.startDate));
@@ -55,7 +48,6 @@ angular.module('planning').controller('GeneratePlanController', ['$scope', 'Rand
                 dailyPlans[i] = {};
                 dailyPlans[i].date = interval.startDate.add(i, 'days').toDate();
                 dailyPlans[i].dateJson = dailyPlans[i].date.toJson();
-                var putFunc = putRandomRecipeFactory(i);
                 (function(i) {
                     RandomRecipe.get({
                             year: dailyPlans[i].dateJson.year,

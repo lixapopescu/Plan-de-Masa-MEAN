@@ -17,9 +17,19 @@ exports.random = function(req, res) {
     Recipes.count({}, function(err, count) {
         var rnd = _.random(0, count - 1);
         // console.log(count, rnd);
-        Recipes.find().limit(-rnd - 1).skip(rnd).limit(1).exec(function(err, data) {
+        Recipes.findOne().limit(-(rnd + 1)).skip(rnd).limit(1).lean().exec(function(err, data) {
             if (!err) {
-                res.json(data[0]);
+                var recipe = data;
+                recipe.persons = req.params.year;
+                recipe.fromRequest = req.params.year;
+                // {
+                //     year: req.params.year,
+                //     month: req.params.month,
+                //     day: req.params.day,
+                //     index: req.params.index
+                // };
+                res.json(recipe);
+                console.log('fromRequest',recipe.fromRequest, recipe);
             } else {
                 res.status(400).send({
                     message: errorHandler.getErrorMessage(err)

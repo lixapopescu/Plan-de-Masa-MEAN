@@ -10,6 +10,7 @@ angular.module('planning').factory('RandomRecipe', ['$resource',
                     // console.log('in random recipe factory', data);
                     data = JSON.parse(data);
                     if (!data.image) data.image = data.origin.image;
+                    console.log('RandomRecipe', data.fromRequest);
                     return data;
                 }
             }
