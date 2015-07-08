@@ -12,15 +12,18 @@ angular.module('core').config(['$stateProvider', '$urlRouterProvider', '$stickyS
             .state('top', {
                 abstract: true,
                 sticky: true, //sticky, to remain in DOM while modal is focused on top
-                url: '/',
                 views: {
                     //named view, needed for stickyState
                     //http://stackoverflow.com/questions/26216661/modal-dialog-using-ui-router-from-any-parent-how-to-correctly-specify-state 
                     'top': {
-                        template: '<div ui-view></div>',
-                        controller: 'HomeController'
+                        template: '<div ui-view></div>'
+
                     }
                 }
+            })
+            .state('top.home', {
+                url: '/',
+                controller: 'HomeController'
             });
 
     }

@@ -6,7 +6,7 @@ angular.module('core').controller('HomeController', ['$scope', '$state', 'Authen
         $scope.authentication = Authentication;
 
 
-        console.log(Authentication);
+        // console.log(Authentication);
 
         /**
          *   if authenticated ==> redirect to current plan
@@ -26,6 +26,9 @@ angular.module('core').controller('HomeController', ['$scope', '$state', 'Authen
                 end_month: interval.endDate.month() + 1,
                 end_day: interval.endDate.date()
             });
+        }
+        else {
+            $state.go('authentication.signup');
         }
 
     }
