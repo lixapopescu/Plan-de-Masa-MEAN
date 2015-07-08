@@ -1,4 +1,8 @@
-var mongoose = require('mongoose'),
+'use strict';
+
+var path = require('path'),
+    Utils = require(path.resolve('./modules/core/server/model/utils')),
+    mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
 var RecipesSchema = new Schema({
@@ -18,6 +22,15 @@ var RecipesSchema = new Schema({
     dish_labels: [String],
     short_name: String,
     image: String,
+    //for picture HTML element
+    picture: {
+        sm: String,
+        md: String,
+        lg: String,
+        gt_lg: String,
+        def: String
+    },
+    imageDefault: String,
     persons: Number,
     original_recipes: [Object],
     time: Number,
@@ -47,6 +60,11 @@ var RecipesSchema = new Schema({
 
 }, {
     collection: 'recipes'
+});
+
+RecipesSchema.pre('save', function(next) {
+    Utils.createPictureKey(this);
+    next();
 });
 
 mongoose.model('Recipes', RecipesSchema);

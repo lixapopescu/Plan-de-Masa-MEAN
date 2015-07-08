@@ -24,7 +24,12 @@
 		"io": true,
 		"_": true,
 		"ApplicationConfiguration": true,
-		"moment": true
+		"getDistanceLabel": true,
+		"mixinRecipe": true,
+		"mixinRecipes": true,
+		"moment": true,
+		"showToastUndo": true,
+		"showToastSimple": true
 	},
 	"predef": [ // Extra globals.
 		"inject",

@@ -6,11 +6,20 @@ angular.module('planning').config(['$stateProvider', '$stickyStateProvider',
         $stickyStateProvider.enableDebug(true);
 
         $stateProvider
-            .state('plan', {
+            .state('top',{
+                abstract: true,
+                sticky: true,
+                views: {
+                    'top': {
+                        template: '<div ui-view></div>'
+                    }
+                }
+            })
+            .state('top.plan', {
                 abstract: true,
                 templateUrl: 'modules/planning/views/display/display.client.view.html',
             })
-            .state('plan.detail', {
+            .state('top.plan.detail', {
                 url: '/plan/:start_year/:start_month/:start_day/:end_year/:end_month/:end_day',
                 views: {
                     'recipes': {
@@ -21,7 +30,7 @@ angular.module('planning').config(['$stateProvider', '$stickyStateProvider',
                     }
                 }
             })
-            .state('generatePlan',{
+            .state('top.generatePlan', {
                 url: '/plan_nou',
                 templateUrl: 'modules/planning/views/generate/plan.client.view.html',
                 controller: 'GeneratePlanController'
@@ -42,9 +51,7 @@ angular.module('planning').config(['$stateProvider', '$stickyStateProvider',
                 proxy: { // Custom config processed in $stateChangeStart
                     external: 'retetaModal.full',
                     internal: 'retetaModal.modal'
-                },
-                deepStateRedirect: true,
-                stickyState: true
+                }
             })
             .state('retetaModal.modal', {
                 views: {

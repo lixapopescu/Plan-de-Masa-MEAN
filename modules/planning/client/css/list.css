@@ -32,6 +32,10 @@
     width: 95%;
 }
 
+.product .bought{
+    text-decoration: line-through;
+}
+
 /*for clickability on touch screens*/
 @media screen and (max-width: 960px) { 
     .masonry .items .product {

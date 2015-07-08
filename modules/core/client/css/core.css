@@ -44,6 +44,7 @@ a:hover .header-profile-image {
 md-icon > .mdi {
     font-size: 1.5rem;
 }
+
 .menu md-icon {
     font-size: 2rem;
 }
@@ -81,22 +82,25 @@ md-icon > .mdi {
 }
 
 .header-action {
-	font-size: 2rem !important;
+    font-size: 2rem !important;
 }
 
-.logobox{
+.logobox {
     font-size: 0.2rem;
     /*display: none !important;*/
 }
-.logobox a{
+
+.logobox a {
     color: #000000;
-	color: rgba(0, 0, 0, 0.870588);
+    color: rgba(0, 0, 0, 0.870588);
 }
+
 .logobox a:active {
-	text-decoration: none;
+    text-decoration: none;
 }
+
 .logobox img {
-	height: 3rem;
+    height: 3rem;
 }
 
 a {
@@ -104,11 +108,16 @@ a {
 }
 
 hr {
-  border: 0;
-  height: 1px;
-  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-  background-image: -moz-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-  background-image: -ms-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-  background-image: -o-linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
-  background-image: linear-gradient(left, rgba(0,0,0,0), rgba(0,0,0,0.75), rgba(0,0,0,0));
+    border: 0;
+    height: 1px;
+    background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#1e5799), color-stop(100%,#7db9e8)); /* Chrome,Safari4+ */
+    background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: -ms-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: -o-linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    background-image: linear-gradient(left, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.action-comment{
+    font-size: 0.8rem;
 }

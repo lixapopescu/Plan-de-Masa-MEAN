@@ -1,44 +1,21 @@
-<div layout="column" layout-align="start start">
+<div layout="column" layout-align="start center">
     <div layout="row" layout-align="space-between center">
-        <div>
-            <form action="">
-                <div>
-                    <md-input-container class="md-icon-float">
-                        <!-- Use floating label instead of placeholder -->
-                        <!-- <label>Plan pentru</label> -->
-                        <md-icon md-font-icon="fa-calendar" class="fa fa-lg"></md-icon>
-                        <input date-range-picker ng-model="date" type="text" class="date-picker" name="date" options="opts" required aria-label="Alege intervalul &icirc;n care vrei s&#259; generezi planul" />
-                    </md-input-container>
-                </div>
-            </form>
+        <div ng-include="'/modules/planning/views/parts/calendar.dialog.client.view.html'"></div>
+        <div ng-if="!globalPlan.numberOfDays || !dailyPlans">
+            <md-button ng-click="generatePlan(date, globalPlan, dailyPlans, RandomRecipeService)" class="md-raised md-primary no-capitalize" aria-label="Genereaz&#259; planul">Genereaz&#259; planul</md-button>
         </div>
-        <div>
-            <md-button ng-click="generatePlan(date, globalPlan, dailyPlans)" class="md-raised md-primary no-capitalize" aria-label="Genereaz&#259; planul">Genereaz&#259; planul</md-button>
+        <div ng-if="globalPlan.numberOfDays && dailyPlans">
+            <md-button ng-click="regeneratePlan(dailyPlans, RandomRecipeService)" class="no-capitalize" aria-label="Regenereaz&#259; planul">Regenereaz&#259; planul</md-button>
+            <md-button ng-click="savePlan(date, dailyPlans, RecipeService, mdToast, state)" class="md-raised md-primary no-capitalize" aria-label="Gata">Gata
+            </md-button>
         </div>
     </div>
     <div ng-if="dailyPlans" layout="row" layout-wrap layout-align="center start">
-        <div ng-repeat="dailyPlan in dailyPlans | orderBy: '+date'" layout="column" layout-wrap layout-align="center start" class="g-hover-card  md-whiteframe-z2">
-                <picture>
-                    <source media="(max-width:620px)" ng-srcset="{{dailyPlan.recipe.picture.sm}}">
-                    <source media="(min-width:620px) and (max-width:960px)" ng-srcset="{{dailyPlan.recipe.picture.md}}">
-                    <source media="(min-width:960px) and (max-width:1200px)" ng-srcset="{{dailyPlan.recipe.picture.lg}}">
-                    <source media="(min-width:1200px)" ng-srcset="{{dailyPlan.recipe.picture.gt_lg}}">
-                    <img ng-src="{{dailyPlan.recipe.image}}" alt="{{dailyPlan.recipe.title}}" data-ui-sref="retetaModal({year: dailyPlan.dateJson.year, month:dailyPlan.dateJson.month, day:dailyPlan.dateJson.day, url: dailyPlan.recipe.url, id: dailyPlan.recipe._id, recipe: dailyPlan.recipe})">
-                </picture>
-            <div class="user-avatar">
-                <md-button class="circle fab">
-                    <!-- {{$index}} -->
-                    {{dailyPlan.date}}
-                </md-button>
-            </div>
-            <div class="info">
-                <div class="title">
-                	titlu
-                </div>
-                <div class="description">
-                	desc
-                </div>
-            </div>
+        <div ng-repeat="dailyPlan in dailyPlans track by $index| orderBy: '+date'" layout="column" layout-wrap layout-align="center start" class="g-hover-card  md-whiteframe-z2">
+            <div ng-include="'/modules/planning/views/parts/recipe.single.client.view.html'"></div>
         </div>
+    </div>
+    <div ng-if="!globalPlan.numberOfDays || !dailyPlans" class="action-comment">
+        Re&#x21B;etele deja salvate nu vor fi modificate
     </div>
 </div>

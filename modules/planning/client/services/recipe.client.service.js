@@ -12,6 +12,9 @@ angular.module('planning').factory('Recipe', ['$resource',
                     if (!data.image) data.image = data.origin.image;
                     return data;
                 }
+            },
+            delete: {
+                method: 'DELETE'
             }
         });
     }

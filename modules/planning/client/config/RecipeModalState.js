@@ -1,13 +1,31 @@
 'use strict';
 
-angular.module('planning').run(
-    function($rootScope, $state, $modal) { //http://plnkr.co/edit/Qi1UDcFgTEeJmKa4liK2?p=preview
+var publicStates = ['home', 'authentication.signup', 'authentication.signin', 'password.forgot', 'password.reset', 'password.reset.invalid', 'password.reset.success', 'password.reset.form'];
+
+angular.module('planning').run(['$rootScope', '$state', '$modal', 'Authentication',
+    function($rootScope, $state, $modal, Authentication) { //http://plnkr.co/edit/Qi1UDcFgTEeJmKa4liK2?p=preview
         var stateBehindModal = {},
             modalInstance = null;
-        console.log(' RecipeModalState');
 
         $rootScope.$on('$stateChangeStart', function(evt, toState, toStateParams, fromState, fromStateParams) {
-            console.log('$stateChangeStart');
+            // console.log('$stateChangeStart', Authentication.user, toState, JSON.stringify(toStateParams));
+
+            //for all non-public states
+            //if not authenticated, redirect to homepage, leaving breadcrumbs in url (redirect parameter)
+            if (!Authentication.user && !_.contains(publicStates, toState.name)) {
+                console.log('not authorized');
+                var params = {
+                    redirect: {
+                        state: toState.name,
+                        params: JSON.stringify(toStateParams)
+                    }
+                };
+                console.log('params', params);
+                evt.preventDefault();
+                $state.go('authentication.signin');
+                return;
+            }
+
 
             //
             // Implementing 'proxy': redirect to the state according to where it's from.
@@ -80,4 +98,5 @@ angular.module('planning').run(
                 modalInstance.dismiss();
             }
         });
-    });
+    }
+]);

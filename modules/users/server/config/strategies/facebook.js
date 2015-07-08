@@ -9,7 +9,7 @@ var passport = require('passport'),
 	users = require('../../controllers/users.server.controller');
 
 module.exports = function(config) {
-	console.log('export passport add');
+	// console.log('export passport add');
 	// Use facebook strategy
 	passport.use(new FacebookStrategy({
 			clientID: config.facebook.clientID,

@@ -18,7 +18,7 @@ var countBought = function(products) {
 
 angular.module('planning').controller('ListController', ['$scope', '$stateParams', 'List',
     function($scope, $stateParams, List) {
-        console.log('in ListController');
+        // console.log('in ListController');
         List.query({
                 start_year: $stateParams.start_year,
                 start_month: $stateParams.start_month,
@@ -30,7 +30,7 @@ angular.module('planning').controller('ListController', ['$scope', '$stateParams
             function(data) {
                 // console.log('data', data);
                 $scope.list = data;
-                console.log('list', $scope.list);
+                // console.log('list', $scope.list);
             },
             function(err) {
                 //handle error

@@ -3,7 +3,7 @@
 var fillCustomAttributesList = function(list) {
     console.log('fillCustomAttributesList');
     _.each(list, function(categ) {
-    	console.log('categ', categ);
+    	// console.log('categ', categ);
         _.each(categ.ingredients, function(item) {
             item.bought = false;
             item.foldable = true; //TODO: remove when recipes are added

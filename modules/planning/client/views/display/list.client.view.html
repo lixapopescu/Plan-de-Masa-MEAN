@@ -14,8 +14,9 @@
                     </span>
                     <span ng-if="product.bought" ng-click="toggleBought(product)">
                         <i class="fa fa-check-square-o fa-fw"></i>
-                        <span class="cumparat">{{product.name}}</span>
-                        <span class="cumparat" ng-if="product.total > 0">: {{product.total}} {{product.um}}</span>
+                        <span class="product bought" >{{product.name}}
+                            <span ng-if="product.total > 0">: {{product.total}} {{product.um}}</span>
+                        </span>
                     </span>
                     <span ng-if="(category.folded || product.unfoldable) && det.abbrev" ng-repeat="det in product.details | orderBy: '+abbrev'">
                         <span class="fa-stack fa-lg reteta-abreviere-logo">
@@ -28,7 +29,7 @@
                             <span ng-if="det.abbrev" class="fa-stack fa-lg reteta-abreviere-logo">
                                 <i class="fa fa-circle-thin fa-stack-1x"></i>
                                 <i class="fa fa-stack-1x">{{det.abbrev}}</i>
-                            </span> 
+                            </span>
                             {{det.quantity}} {{det.um}}
                             <span ng-if="det.comment" class="ingredient-comentariu">({{det.comment}})</span>
                         </li>

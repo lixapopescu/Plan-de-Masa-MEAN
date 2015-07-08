@@ -5,10 +5,10 @@
             <div layout="row" layout-align="space-between center">
                 <div>
                     <i class="fa fa-calendar"></i>
-                    {{globalPlan.start.distanceLabel}} 
+<!--                     {{globalPlan.start.distanceLabel}} 
                     <i class="fa fa-long-arrow-right"></i> 
                     {{globalPlan.last.distanceLabel}}
-                    <!-- ({{globalPlan.start.dayLabel}} - {{globalPlan.last.dayLabel}}) -->
+ -->                    <!-- ({{globalPlan.start.dayLabel}} - {{globalPlan.last.dayLabel}}) -->
                 </div>
                 <div>
                     <a href="#list" class="link-no-highlight">
@@ -20,48 +20,12 @@
         </div>
         <div layout="row" layout-wrap layout-align="center start">
             <div class="g-hover-card  md-whiteframe-z2" ng-repeat="dailyPlan in dailyPlans | orderBy: '+date'">
-                <picture>
-                    <source media="(max-width:620px)" ng-srcset="{{dailyPlan.recipe.picture.sm}}">
-                    <source media="(min-width:620px) and (max-width:960px)" ng-srcset="{{dailyPlan.recipe.picture.md}}">
-                    <source media="(min-width:960px) and (max-width:1200px)" ng-srcset="{{dailyPlan.recipe.picture.lg}}">
-                    <source media="(min-width:1200px)" ng-srcset="{{dailyPlan.recipe.picture.gt_lg}}">
-                    <img ng-src="{{dailyPlan.recipe.image}}" alt="{{dailyPlan.recipe.title}}" data-ui-sref="retetaModal({year: dailyPlan.dateJson.year, month:dailyPlan.dateJson.month, day:dailyPlan.dateJson.day, url: dailyPlan.recipe.url, id: dailyPlan.recipe._id, recipe: dailyPlan.recipe})">
-                </picture>
-                <div class="user-avatar">
-                    <!-- <img class="circle" src="http://lorempixel.com/80/80/" alt=""> -->
-                    <!-- <i class="circle mdi mdi-checkbox-blank    -circle"></i> -->
-                    <md-button class="circle fab" aria-label="{{getDistanceLabel(dailyPlan)}}">
-                        <div layout="column" layout-align="center center" layout-fill>
-                            <div ng-if="dailyPlan.dayDistanceRelativeToToday">{{dailyPlan.dayDistanceLabel}}</div>
-                            <div ng-if="!dailyPlan.dayDistanceRelativeToToday">&nbsp;</div>
-                            <div class="focus">
-                                <span ng-if="dailyPlan.dayDistanceRelativeToToday">{{Math.abs(dailyPlan.dayDistance)}}</span>
-                                <span ng-if="!dailyPlan.dayDistanceRelativeToToday">{{dailyPlan.dayDistanceLabel}}</span>
-                            </div>
-                            <div ng-if="dailyPlan.dayDistanceRelativeToToday">zile</div>
-                            <div ng-if="!dailyPlan.dayDistanceRelativeToToday">&nbsp;</div>
-                        </div>
-                    </md-button>
-                </div>
-                <div class="info">
-                    <div class="title">
-                        <a data-ui-sref="retetaModal({year: dailyPlan.dateJson.year, month:dailyPlan.dateJson.month, day:dailyPlan.dateJson.day, url: dailyPlan.recipe.url, id: dailyPlan.recipe._id, recipe: dailyPlan.recipe})"> {{dailyPlan.recipe.title}}</a>
-                    </div>
-                    <div class="description">
-                        <i class="mdi mdi-account"></i> {{dailyPlan.recipe.persons}}
-                        <i class="mdi mdi-cart"></i> 0/{{dailyPlan.recipe.ingredientNumber}}
-                    </div>
-                </div>
-                <div class="bottom" hide>
-                    <div>{{dailyPlan.dayLabel}} {{dailyPlan.date | date: 'dd/MM'}}</div>
-                    stars rating
-                </div>
+                <div ng-include="'/modules/planning/views/parts/recipe.single.client.view.html'"></div>
             </div>
-
         </div>
     </div>
     <div layout="column" layout-align="center center" layout-fill ng-if="noPlan" class="message-centered">
-        <a data-ui-sref="generatePlan"><h3>Crează acum planul tău</h3>
-        Durează 1 minut</a>
+        <a data-ui-sref="generatePlan">
+            <h3>Crează acum planul tău</h3> Durează 1 minut</a>
     </div>
 </div>
