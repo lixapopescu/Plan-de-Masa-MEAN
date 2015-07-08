@@ -1,100 +1,32 @@
 'use strict';
 
-angular.module('core').controller('HomeController', ['$scope', 'Authentication',
-    'usersService', '$mdSidenav', '$mdBottomSheet', '$log',
-    function($scope, Authentication, usersService, $mdSidenav, $mdBottomSheet, $log) {
+angular.module('core').controller('HomeController', ['$scope', '$state', 'Authentication',
+    function($scope, $state, Authentication) {
         // This provides Authentication context.
         $scope.authentication = Authentication;
 
 
+        console.log(Authentication);
+
         /**
-         * Main Controller for the Angular Material Starter App
-         * @param $scope
-         * @param $mdSidenav
-         * @param avatarsService
-         * @constructor
+         *   if authenticated ==> redirect to current plan
+         *   else ==> redirect to sign up, for the moment 
+         *           TODO: create homepage with action button for signin/up
          */
-
-
-        // Load all registered users
-
-        usersService
-            .loadAll()
-            .then(function(users) {
-                self.users = [].concat(users);
-                self.selected = users[0];
+        if (Authentication.user) {
+            var interval = {
+                startDate: moment(),
+                endDate: moment().add(6, 'days')
+            };
+            $state.go('top.plan.detail', {
+                start_year: interval.startDate.year(),
+                start_month: interval.startDate.month() + 1,
+                start_day: interval.startDate.date(),
+                end_year: interval.endDate.year(),
+                end_month: interval.endDate.month() + 1,
+                end_day: interval.endDate.date()
             });
-
-        // *********************************
-        // Internal methods
-        // *********************************
-
-        /**
-         * Hide or Show the 'left' sideNav area
-         */
-        function toggleUsersList() {
-            $mdSidenav('left').toggle();
         }
-
-        /**
-         * Select the current avatars
-         * @param menuId
-         */
-        function selectUser(user) {
-            self.selected = angular.isNumber(user) ? $scope.users[user] : user;
-            self.toggleList();
-        }
-
-        /**
-         * Show the bottom sheet
-         */
-        function share($event) {
-            var user = self.selected;
-
-            /**
-             * Bottom Sheet controller for the Avatar Actions
-             */
-            function UserSheetController($mdBottomSheet) {
-                this.user = user;
-                this.items = [{
-                    name: 'Phone',
-                    icon: 'phone'
-                }, {
-                    name: 'Twitter',
-                    icon: 'twitter'
-                }, {
-                    name: 'Google+',
-                    icon: 'google_plus'
-                }, {
-                    name: 'Hangout',
-                    icon: 'hangouts'
-                }];
-                this.performAction = function(action) {
-                    $mdBottomSheet.hide(action);
-                };
-            }
-
-            $mdBottomSheet.show({
-                parent: angular.element(document.getElementById('content')),
-                templateUrl: 'modules/core/views/contactSheet.html',
-                controller: ['$mdBottomSheet', UserSheetController],
-                controllerAs: 'vm',
-                bindToController: true,
-                targetEvent: $event
-            }).then(function(clickedItem) {
-                $log.debug(clickedItem.name + ' clicked!');
-            });
-
-
-        }
-
-        var self = this;
-
-        self.selected = null;
-        self.users = [];
-        self.selectUser = selectUser;
-        self.toggleList = toggleUsersList;
-        self.share = share;
 
     }
 ]);

@@ -6,6 +6,7 @@ var NO_RECIPE = 1;
 var ANOTHER_RECIPE = 2;
 var DEFAULT_RECIPE_STATE = OK_RECIPE;
 
+//save a random recipe
 function saveRandomRecipe(dailyPlans, i, data, recipeStatus) {
     // console.log('i+dta', i, data);
     dailyPlans[i] = data;
@@ -30,6 +31,7 @@ function getRandomRecipe(dailyPlans, i, RandomRecipeService, recipeStatus) {
     })(i);
 }
 
+//generate a recipe for a specific date
 function generateDay(dailyPlans, i, date, RandomRecipeService, recipeStatus) {
     dailyPlans[i] = {};
     dailyPlans[i].date = date;
@@ -37,16 +39,22 @@ function generateDay(dailyPlans, i, date, RandomRecipeService, recipeStatus) {
     getRandomRecipe(dailyPlans, i, RandomRecipeService, recipeStatus);
 }
 
+//generate 1 recipe for each day of the interval, including start and end date
 function generatePlan(interval, globalPlan, dailyPlans, RandomRecipeService) {
     var duration = moment.duration(interval.endDate.diff(interval.startDate));
-    var startDate = interval.startDate;
+    //create new moment object to not modify the original 'interval' object
+    var startDate = moment(interval.startDate);
     globalPlan.numberOfDays = parseInt(duration.format('d')) + 1;
 
     for (var i = 0; i < globalPlan.numberOfDays; i++, startDate.add(1, 'days')) {
         generateDay(dailyPlans, i, startDate.toDate(), RandomRecipeService, DEFAULT_RECIPE_STATE);
     }
+    // console.log('after loop', startDate, interval.startDate);
 }
 
+//generate plan after changes made by the user: 
+//- remove a day from planning
+//- change a recipe for a new one
 function regeneratePlan(dailyPlans, RandomRecipeService) {
     // console.log('regeneratePlan');
     for (var i = 0; i < dailyPlans.length; i++) {
@@ -57,10 +65,14 @@ function regeneratePlan(dailyPlans, RandomRecipeService) {
     }
 }
 
+//de-archive recipe 
 function undeleteRecipe() {
     console.log('undelete TODO');
 }
 
+//archive recipe
+//not doing Toasts, as I need to figure out a way to display info having only one toast shown at a time (not to overwhelm the screen <-- material design specs)
+//in order to do that, I would need to call one Toast in the previous' .then function
 function deleteRecipe(RecipeService, dailyPlans, i, year, month, day, url, title) {
     console.log('delete recipe', title);
     RecipeService.delete({
@@ -82,13 +94,14 @@ function deleteRecipe(RecipeService, dailyPlans, i, year, month, day, url, title
         });
 }
 
-function deletePlan(dailyPlans, RecipeService, mdToast) {
-    // console.log('deletePlan', dailyPlans.length);
-    for (var i = 0; i < dailyPlans.length; i++) {
-        deleteRecipe(RecipeService, dailyPlans, i, dailyPlans[i].dateJson.year, dailyPlans[i].dateJson.month, dailyPlans[i].dateJson.day, dailyPlans[i].recipe.url, dailyPlans[i].recipe.title, mdToast);
-    }
-}
+// function deletePlan(dailyPlans, RecipeService, mdToast) {
+//     // console.log('deletePlan', dailyPlans.length);
+//     for (var i = 0; i < dailyPlans.length; i++) {
+//         deleteRecipe(RecipeService, dailyPlans, i, dailyPlans[i].dateJson.year, dailyPlans[i].dateJson.month, dailyPlans[i].dateJson.day, dailyPlans[i].recipe.url, dailyPlans[i].recipe.title, mdToast);
+//     }
+// }
 
+//change status with states from RECIPE_STATES
 function toggleStatus(dailyPlan) {
     if (!dailyPlan) {
         dailyPlan = {};
@@ -101,15 +114,15 @@ function toggleStatus(dailyPlan) {
     }
 }
 
+//save a planning and redirect to recipe+list views
 function savePlan(interval, dailyPlans, RecipeService, mdToast, state) {
     // console.log('savePlanning');
     for (var i = 0; i < dailyPlans.length; i++) {
-        if (dailyPlans[i] && dailyPlans[i].statusIndex === 1) { //empty day
+        if (dailyPlans[i] && dailyPlans[i].statusIndex === NO_RECIPE) { //empty day
             deleteRecipe(RecipeService, dailyPlans, i, dailyPlans[i].dateJson.year, dailyPlans[i].dateJson.month, dailyPlans[i].dateJson.day, dailyPlans[i].recipe.url, dailyPlans[i].recipe.title, mdToast);
         }
     }
     showToastSimple(mdToast, 'Plan salvat');
-    console.log(interval);
     state.go('top.plan.detail', {
         start_year: interval.startDate.year(),
         start_month: interval.startDate.month() + 1,
@@ -134,7 +147,6 @@ angular.module('planning').controller('GeneratePlanController', ['$scope', '$win
 
         $scope.generatePlan = generatePlan;
         $scope.regeneratePlan = regeneratePlan;
-        $scope.deletePlan = deletePlan;
         $scope.savePlan = savePlan;
         $scope.getDistanceLabel = getDistanceLabel;
         $scope.toggleStatus = toggleStatus;

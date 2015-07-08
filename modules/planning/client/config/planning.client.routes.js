@@ -6,15 +6,6 @@ angular.module('planning').config(['$stateProvider', '$stickyStateProvider',
         $stickyStateProvider.enableDebug(true);
 
         $stateProvider
-            .state('top',{
-                abstract: true,
-                sticky: true,
-                views: {
-                    'top': {
-                        template: '<div ui-view></div>'
-                    }
-                }
-            })
             .state('top.plan', {
                 abstract: true,
                 templateUrl: 'modules/planning/views/display/display.client.view.html',

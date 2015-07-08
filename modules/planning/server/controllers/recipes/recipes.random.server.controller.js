@@ -64,7 +64,7 @@ function generateRandomRecipe(req, res){
 //req parameters: year, month, day, index
 //gets current recipe for date or generates & upserts a random one
 exports.random = function(req, res) {
-    console.log('random recipes.random.server.controller', req.params.year, req.params.month, req.params.day, req.params.index);
+    // console.log('random recipes.random.server.controller', req.params.year, req.params.month, req.params.day, req.params.index);
 
     Planning.findOne({
         date: Utils.getDateFromString(req.params.year, req.params.month, req.params.day),
@@ -72,7 +72,6 @@ exports.random = function(req, res) {
     }, function (err, plan){
         if (!err) {
             //if didn't find any planning for the date+user => generate random
-            console.log('err/plan', err, plan);
             if (!plan){
                 generateRandomRecipe(req, res);
             }
