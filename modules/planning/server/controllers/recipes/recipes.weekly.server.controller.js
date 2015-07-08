@@ -34,7 +34,7 @@ exports.find = function(req, res) {
         },
         function(err, data) {
             if (!err) {
-                console.log(data);
+                // console.log(data);
                 res.json(data);
             } else {
                 res.status(400).send({

@@ -55,14 +55,17 @@ function generatePlan(interval, globalPlan, dailyPlans, RandomRecipeService) {
 //generate plan after changes made by the user: 
 //- remove a day from planning
 //- change a recipe for a new one
-function regeneratePlan(dailyPlans, RandomRecipeService) {
-    // console.log('regeneratePlan');
+//check for date changes
+function regeneratePlan(interval, globaPlan, dailyPlans, RandomRecipeService) {
+    //status changes (RECIPE_STATES)
     for (var i = 0; i < dailyPlans.length; i++) {
         if (dailyPlans[i] && dailyPlans[i].statusIndex === ANOTHER_RECIPE) {
             console.log('random for ', dailyPlans[i].recipe.title);
             getRandomRecipe(dailyPlans, i, RandomRecipeService, ANOTHER_RECIPE);
         }
     }
+    //check for date changes TODO
+    // if (interval.startDate != globalPlan.st)
 }
 
 //de-archive recipe 
@@ -135,8 +138,8 @@ function savePlan(interval, dailyPlans, RecipeService, mdToast, state) {
 
 //RecipeService = factory for recipe on single day
 //recipes = state parameter passed to modal
-angular.module('planning').controller('GeneratePlanController', ['$scope', '$window', '$mdToast', '$state', 'RandomRecipe', 'Recipe', 'Authentication',
-    function($scope, $window, $mdToast, $state, RandomRecipe, Recipe, Authentication) {
+angular.module('planning').controller('GeneratePlanController', ['$scope', '$rootScope', '$mdToast', '$state', 'RandomRecipe', 'Recipe', 'Authentication',
+    function($scope, $rootScope, $mdToast, $state, RandomRecipe, Recipe, Authentication) {
         // console.log('GeneratePlanController');
 
         $scope.dailyPlans = [];
@@ -172,34 +175,17 @@ angular.module('planning').controller('GeneratePlanController', ['$scope', '$win
         };
 
         moment.locale('ro');
-
-        $scope.opts = {
-            locale: {
-                applyClass: 'btn-green',
-                applyLabel: 'Gata',
-                fromLabel: 'de la',
-                toLabel: 'până la',
-                cancelLabel: 'Înapoi',
-                customRangeLabel: 'Cum vreau eu',
-                daysOfWeek: ['Du', 'Lu', 'Ma', 'Mi', 'J', 'Vi', 'Sâ'],
-                firstDay: 1,
-                monthNames: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie',
-                    'Octombrie', 'Noiembrie', 'Decembrie'
-                ]
-
-            },
-            format: 'dd DD MMMM',
-            ranges: {
-                'De azi': [moment(), moment().add(6, 'days')],
-                'De mâine': [moment().add(1, 'days'), moment().add(7, 'days')],
-                'Săptămâna viitoare': [moment().day(8), moment().day(8).add(6, 'days')]
-            }
-        };
+        $scope.opts = CALENDAR_OPTIONS;
 
         //Watch for date changes
-        $scope.$watch('date', function(newDate) {
-            console.log('New date set: ', newDate);
-        }, false);
+        $rootScope.$on('interval.change', function(event, interval){
+            console.log('rootscope.on', event, interval);
+            $scope.date = interval;
+        });
+        // $scope.$watch('date', function(newDate) {
+        //     console.log('New date set: ', newDate);
+        //     // generatePlan($scope.date, $scope.globalPlan, $scope.dailyPlans, $scope.RandomRecipeService);
+        // }, false);
 
     }
 ]);

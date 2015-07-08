@@ -1,22 +1,26 @@
 <div data-ng-controller="RecipesController">
     <div layout="column" layout-margin layout-fill layout-padding ng-if="dailyPlans">
         <div flex>
-            <h2>
             <div layout="row" layout-align="space-between center">
-                <div>
-                    <i class="fa fa-calendar"></i>
-<!--                     {{globalPlan.start.distanceLabel}} 
-                    <i class="fa fa-long-arrow-right"></i> 
-                    {{globalPlan.last.distanceLabel}}
- -->                    <!-- ({{globalPlan.start.dayLabel}} - {{globalPlan.last.dayLabel}}) -->
+                <div layout="row" layout-align="space-between center">
+                    <div ng-include="'/modules/planning/views/parts/calendar.dialog.client.view.html'"></div>
+                    <div ng-if="!globalPlan.numberOfDays || !dailyPlans">
+                        <md-button ui-sref="top.plan.detail({start_year: date.startDate.year(),
+                         start_month: date.startDate.month() + 1,
+                         start_day: date.startDate.date(),
+                         end_year: date.endDate.year(),
+                         end_month: date.endDate.month() + 1,
+                         end_day: date.endDate.date()})" class="no-capitalize" aria-label="Schimb&#259; zilele">Schimb&#259; zilele</md-button>
+                    </div>
                 </div>
                 <div>
-                    <a href="#list" class="link-no-highlight">
-                        <i class="fa fa-cart-arrow-down"></i>
-                    </a>
+                    <h2>
+                        <a href="#list" class="link-no-highlight">
+                            <i class="fa fa-cart-arrow-down"></i>
+                        </a>
+                    </h2>
                 </div>
             </div>
-        </h2>
         </div>
         <div layout="row" layout-wrap layout-align="center start">
             <div class="g-hover-card  md-whiteframe-z2" ng-repeat="dailyPlan in dailyPlans | orderBy: '+date'">

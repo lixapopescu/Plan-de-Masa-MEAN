@@ -1,7 +1,7 @@
 'use strict';
 
 var fillCustomAttributesList = function(list) {
-    console.log('fillCustomAttributesList');
+    // console.log('fillCustomAttributesList');
     _.each(list, function(categ) {
     	// console.log('categ', categ);
         _.each(categ.ingredients, function(item) {

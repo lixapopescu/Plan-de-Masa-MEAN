@@ -29,7 +29,9 @@
 		"mixinRecipes": true,
 		"moment": true,
 		"showToastUndo": true,
-		"showToastSimple": true
+		"showToastSimple": true,
+		"CALENDAR_OPTIONS": true,
+		"getInterval": true
 	},
 	"predef": [ // Extra globals.
 		"inject",
