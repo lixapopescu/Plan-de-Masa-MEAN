@@ -39,3 +39,11 @@
 	min-height: 150px;
 	max-height: 150px;
 }
+
+.settings{
+	height: 90vh;
+}
+
+.settings .md-subheader{
+	font-size: 1.5rem !important;
+}

@@ -1,28 +1,42 @@
-<section data-ng-controller="SettingsController">
-    <div class="page-header">
+<section data-ng-controller="SettingsController" layout="column" flex layout-fill>
+    <md-content class="settings">
+        <section>
+            <md-subheader class="md-primary">Setari generale</md-subheader>
+            <div ng-include="'modules/users/views/settings/edit-profile.client.view.html'"></div>
+        </section>
+        <section>
+            <md-subheader class="md-primary">Poza</md-subheader>
+            <div ng-include="'modules/users/views/settings/change-profile-picture.client.view.html'" scope="" onload=""></div>
+        </section>
+        <section>
+            <md-subheader class="md-primary">Parola</md-subheader>
+            <div ng-include="'modules/users/views/settings/change-password.client.view.html'" scope="" onload=""></div>
+        </section>
+        <section>
+            <md-subheader class="md-primary">Re&#x21B;ele sociale</md-subheader>
+            <div ng-include="'modules/users/views/settings/manage-social-accounts.client.view.html'" scope="" onload=""></div>
+        </section>
+    </md-content>
+
+    <!--     <div class="page-header">
         <h1>Set&#259;ri</h1>
-    </div>
-    <div layout="row" layout-align="space-around start">
-        <div>
-            <nav>
-                <ul class="nav nav-pills nav-stacked">
-                    <li data-ui-sref-active="active">
-                        <a data-ui-sref="top.settings.profile">Editeaz&#259; profilul</a>
-                    </li>
-                    <li data-ui-sref-active="active">
-                        <a data-ui-sref="top.settings.picture">Schimb&#259; poza</a>
-                    </li>
-                    <li data-ui-sref-active="active" data-ng-show="user.provider === 'local'">
-                        <a data-ui-sref="top.settings.password">Schimb&#259; parola</a>
-                    </li>
-                    <li data-ui-sref-active="active">
-                        <a data-ui-sref="top.settings.accounts">Re&#x21B;ele sociale</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <div class="settings-view">
-            <div data-ui-view></div>
-        </div>
-    </div>
+    </div> -->
+    <!-- <div> -->
+    <!-- <md-content> -->
+    <!--             <md-tabs md-dynamic-height md-border-bottom md-swipe-content>
+                <md-tab label="Editeaz&#259; profilul" data-ui-sref="top.settings.profile" >
+                    <div data-ui-view></div>
+                </md-tab>
+                <md-tab label="Schimb&#259; poza" data-ui-sref="top.settings.picture">
+                    <div data-ui-view></div>
+                </md-tab>
+                <md-tab label="Schimb&#259; parola" data-ui-sref="top.settings.password">
+                    <div data-ui-view></div>
+                </md-tab>
+                <md-tab label="Re&#x21B;ele sociale" data-ui-sref="top.settings.accounts">
+                    <div data-ui-view></div>
+                </md-tab>
+            </md-tabs> -->
+    <!-- </md-content> -->
+    <!-- </div> -->
 </section>
