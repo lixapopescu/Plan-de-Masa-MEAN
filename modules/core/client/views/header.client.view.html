@@ -13,8 +13,8 @@
             </div>
         </div>
         <!--The right side-->
-        <div layout="row" layout-align="center center" data-ng-show="authentication.user">
-            <div>
+        <div layout="row" layout-align="center center">
+            <div data-ng-show="authentication.user">
                 <md-button aria-label="Planurile mele" data-ui-sref="top.plan">
                     <md-icon><i class="mdi mdi-dns"></i></md-icon>
                     <!-- <md-icon md-font-icon="mdi-dns" class="mdi s32 md-primary"></md-icon> -->
@@ -23,7 +23,7 @@
                     </md-tooltip>
                 </md-button>
             </div>
-            <div>
+            <div data-ng-show="authentication.user">
                 <md-button aria-label="Plan nou" data-ui-sref="top.generatePlan">
                     <md-icon><i class="mdi mdi-plus"></i> </md-icon>
                     <md-tooltip>
@@ -32,7 +32,7 @@
                 </md-button>
             </div>
             <div data-ng-hide="authentication.user" layout="row">
-<!--                 <md-button aria-label="Contul meu" data-ui-sref="authentication.signin">
+                <!--                 <md-button aria-label="Contul meu" data-ui-sref="authentication.signin">
                     <md-icon><i class="mdi mdi-account"></i></md-icon>
                     <md-tooltip>Contul meu</md-tooltip>
                 </md-button> -->
@@ -55,13 +55,13 @@
                                         Planificarea re&#355;etelor
                                     </md-button>
                                 </md-menu-item>
-                                <md-menu-item>
+<!--                                 <md-menu-item>
                                     <md-button ng-click="" aria-label="Set&#259;ri generale plan">
                                         <md-icon><i class="mdi mdi-settings"></i></md-icon>
                                         Set&#259;ri generale plan
                                     </md-button>
                                 </md-menu-item>
-                                <md-menu-divider></md-menu-divider>
+ -->                                <md-menu-divider></md-menu-divider>
                                 <md-menu-item>
                                     <md-button data-ui-sref="top.settings.profile">
                                         <md-icon md-menu-origin><i class="mdi mdi-account"></i></md-icon>
