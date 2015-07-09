@@ -17,28 +17,54 @@ var //_ = require('lodash'),
 
 exports.findOne = function(req, res) {
     // console.log('findOne recipes.daily.server.controller', Utils.getDateFromString(req.params.year, req.params.month, req.params.day), decodeRecipeUrl(req.params.recipe_url));
-    var planning = Planning.findOne({
-            date: Utils.getDateFromString(req.params.year, req.params.month, req.params.day),
-            'recipe.title': decodeRecipeUrl(req.params.recipe_url),
-            // username: req.user.username,
-            $or: [{
-                archived: 0
-            }, {
-                archived: {
-                    $exists: false
-                }
-            }]
-        },
-        function(err, data) {
-            if (!err) {
-                res.json(data);
-            } else {
-                res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
+    if (req.params.recipe_url !== '_') {
+        Planning.findOne({
+                date: Utils.getDateFromString(req.params.year, req.params.month, req.params.day),
+                'recipe.title': decodeRecipeUrl(req.params.recipe_url),
+                // username: req.user.username,
+                $or: [{
+                    archived: 0
+                }, {
+                    archived: {
+                        $exists: false
+                    }
+                }]
+            },
+            function(err, data) {
+                if (!err) {
+                    res.json(data);
+                } else {
+                    res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
 
-            }
-        });
+                }
+            });
+    } else {
+        Planning.findOne({
+                date: Utils.getDateFromString(req.params.year, req.params.month, req.params.day),
+                // 'recipe.title': decodeRecipeUrl(req.params.recipe_url),
+                // username: req.user.username,
+                $or: [{
+                    archived: 0
+                }, {
+                    archived: {
+                        $exists: false
+                    }
+                }]
+            },
+            function(err, data) {
+                if (!err) {
+                    res.json(data);
+                } else {
+                    res.status(400).send({
+                        message: errorHandler.getErrorMessage(err)
+                    });
+
+                }
+            });
+
+    }
 };
 
 

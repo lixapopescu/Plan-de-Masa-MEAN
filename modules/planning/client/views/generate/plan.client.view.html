@@ -2,10 +2,10 @@
     <div layout="row" layout-align="space-between center">
         <div ng-include="'/modules/planning/views/parts/calendar.dialog.client.view.html'"></div>
         <div ng-if="!globalPlan.numberOfDays || !dailyPlans">
-            <md-button ng-click="generatePlan(date, globalPlan, dailyPlans, RandomRecipeService)" class="md-raised md-primary no-capitalize" aria-label="Genereaz&#259; planul">Genereaz&#259; planul</md-button>
+            <md-button ng-click="generatePlan(date, globalPlan, dailyPlans, RandomRecipeService, RecipeService)" class="md-raised md-primary no-capitalize" aria-label="Genereaz&#259; planul">Genereaz&#259; planul</md-button>
         </div>
         <div ng-if="globalPlan.numberOfDays && dailyPlans">
-            <md-button ng-click="regeneratePlan(date, globalPlan, dailyPlans, RandomRecipeService)" class="no-capitalize" aria-label="Regenereaz&#259; planul">Regenereaz&#259; planul</md-button>
+            <md-button ng-click="regeneratePlan(date, globalPlan, dailyPlans, RandomRecipeService, RecipeService)" class="no-capitalize" aria-label="Regenereaz&#259; planul">Regenereaz&#259; planul</md-button>
             <md-button ng-click="savePlan(date, dailyPlans, RecipeService, mdToast, state)" class="md-raised md-primary no-capitalize" aria-label="Gata">Gata
             </md-button>
         </div>

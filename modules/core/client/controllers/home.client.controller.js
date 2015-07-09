@@ -28,7 +28,7 @@ angular.module('core').controller('HomeController', ['$scope', '$state', 'Authen
             });
         }
         else {
-            $state.go('authentication.signup');
+            $state.go('top.authentication.signup');
         }
 
     }

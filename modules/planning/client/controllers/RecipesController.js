@@ -47,7 +47,6 @@ angular.module('planning').controller('RecipesController', ['$scope', '$rootScop
         $scope.changeInterval = changeInterval; 
 
         $rootScope.$on('interval.change', function(event, interval){
-            console.log('rootscope.on', event, interval);
             $scope.date = interval;
         });
 

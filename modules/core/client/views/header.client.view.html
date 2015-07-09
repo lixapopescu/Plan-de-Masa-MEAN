@@ -13,24 +13,21 @@
             </div>
         </div>
         <!--The right side-->
-        <div layout="row" layout-align="center center">
-            <!--             <div>f</div>
-            <div>p</div>
- -->
+        <div layout="row" layout-align="center center" data-ng-show="authentication.user">
             <div>
-                <md-button aria-label="Re&#355;etele" data-ui-sref="plan">
+                <md-button aria-label="Planurile mele" data-ui-sref="top.plan">
                     <md-icon><i class="mdi mdi-dns"></i></md-icon>
                     <!-- <md-icon md-font-icon="mdi-dns" class="mdi s32 md-primary"></md-icon> -->
                     <md-tooltip>
-                        Planificare
+                        Planurile mele
                     </md-tooltip>
                 </md-button>
             </div>
             <div>
-                <md-button aria-label="Lista de cump&#259;r&#259;turi" data-ui-sref="list.week({start_year:2015})">
-                    <md-icon><i class="mdi mdi-cart-outline"></i> </md-icon>
+                <md-button aria-label="Plan nou" data-ui-sref="top.generatePlan">
+                    <md-icon><i class="mdi mdi-plus"></i> </md-icon>
                     <md-tooltip>
-                        Lista de cump&#259;r&#259;turi
+                        Plan nou
                     </md-tooltip>
                 </md-button>
             </div>
@@ -39,7 +36,7 @@
                     <md-icon><i class="mdi mdi-account"></i></md-icon>
                     <md-tooltip>Contul meu</md-tooltip>
                 </md-button> -->
-                <md-button aria-label="Inregistrare" data-ui-sref="authentication.signup" class="md-accent md-hue-1">
+                <md-button aria-label="Inregistrare" data-ui-sref="top.authentication.signup" class="md-accent md-hue-1">
                     <md-icon><i class="mdi mdi-account-star header-action"></i></md-icon>
                     <md-tooltip>&Icirc;nregistrare</md-tooltip>
                 </md-button>
@@ -66,7 +63,7 @@
                                 </md-menu-item>
                                 <md-menu-divider></md-menu-divider>
                                 <md-menu-item>
-                                    <md-button data-ui-sref="settings.profile">
+                                    <md-button data-ui-sref="top.settings.profile">
                                         <md-icon md-menu-origin><i class="mdi mdi-account"></i></md-icon>
                                         Contul meu
                                     </md-button>

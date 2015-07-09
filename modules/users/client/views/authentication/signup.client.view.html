@@ -17,13 +17,13 @@
                         <md-button class="md-primary md-raised no-capitalize action-button" type="submit" aria-label="Creaz&#259; cont">Creaz&#259; cont</md-button>
                     </div>
                     <div>
-                        <md-button data-ui-sref="authentication.signin({email: email})" class="md-primary md-raised md-hue-1 no-capitalize second-action-button" aria-label="Am deja cont">Am deja cont</md-button>
+                        <md-button data-ui-sref="top.authentication.signin({email: email})" class="md-primary md-raised md-hue-1 no-capitalize second-action-button" aria-label="Am deja cont">Am deja cont</md-button>
                     </div>
                 </div>
                 <div data-ng-show="error" class="text-center text-danger">
                     <span data-ng-if="errorCode == 11010">
                         <span data-ng-bind="error"></span>
-                        <strong><a data-ui-sref="authentication.signin">Intră în cont</a></strong>
+                        <strong><a data-ui-sref="top.authentication.signin">Intră în cont</a></strong>
                     </span>
                     <span ng-if="errorCode != 11010">
                         <strong data-ng-bind="error"></strong>

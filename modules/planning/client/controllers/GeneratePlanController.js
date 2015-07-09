@@ -14,40 +14,73 @@ function saveRandomRecipe(dailyPlans, i, data, recipeStatus) {
 }
 
 //closure function to access loop index, which is outside the promise
-function getRandomRecipe(dailyPlans, i, RandomRecipeService, recipeStatus) {
+function getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, recipeStatus, flagRefreshRecipe) {
     (function(i) {
-        RandomRecipeService.get({
+        console.log(i, flagRefreshRecipe);
+        if (flagRefreshRecipe) {
+            RandomRecipeService.get({
+                    year: dailyPlans[i].dateJson.year,
+                    month: dailyPlans[i].dateJson.month,
+                    day: dailyPlans[i].dateJson.day,
+                    index: i
+                },
+                function(data) {
+                    // console.log('genuine random');
+                    saveRandomRecipe(dailyPlans, i, data, recipeStatus);
+                },
+                function(err) {
+                    //callback(err, null);
+                });
+        } else {
+            RecipeService.find({
                 year: dailyPlans[i].dateJson.year,
                 month: dailyPlans[i].dateJson.month,
                 day: dailyPlans[i].dateJson.day,
-                index: i
-            },
-            function(data) {
-                saveRandomRecipe(dailyPlans, i, data, recipeStatus);
-            },
-            function(err) {
-                //callback(err, null);
+                recipe_url: '_'
+            }, function(data) {
+                console.log(data);
+                if (!data) {
+                    // console.log('searched and not found');
+                    RandomRecipeService.get({
+                            year: dailyPlans[i].dateJson.year,
+                            month: dailyPlans[i].dateJson.month,
+                            day: dailyPlans[i].dateJson.day,
+                            index: i
+                        },
+                        function(data) {
+                            saveRandomRecipe(dailyPlans, i, data, recipeStatus);
+                        },
+                        function(err) {
+                            //callback(err, null);
+                        });
+                } else {
+                    // console.log('searched and found', data.recipe.title);
+                    saveRandomRecipe(dailyPlans, i, data, recipeStatus);
+                }
+            }, function(err) {
+                //handle error
             });
+        }
     })(i);
 }
 
 //generate a recipe for a specific date
-function generateDay(dailyPlans, i, date, RandomRecipeService, recipeStatus) {
+function generateDay(dailyPlans, i, date, RandomRecipeService, RecipeService, recipeStatus, flagRefreshRecipe) {
     dailyPlans[i] = {};
     dailyPlans[i].date = date;
     dailyPlans[i].dateJson = dailyPlans[i].date.toJson();
-    getRandomRecipe(dailyPlans, i, RandomRecipeService, recipeStatus);
+    getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, recipeStatus, flagRefreshRecipe);
 }
 
 //generate 1 recipe for each day of the interval, including start and end date
-function generatePlan(interval, globalPlan, dailyPlans, RandomRecipeService) {
+function generatePlan(interval, globalPlan, dailyPlans, RandomRecipeService, RecipeService) {
     var duration = moment.duration(interval.endDate.diff(interval.startDate));
     //create new moment object to not modify the original 'interval' object
     var startDate = moment(interval.startDate);
     globalPlan.numberOfDays = parseInt(duration.format('d')) + 1;
 
     for (var i = 0; i < globalPlan.numberOfDays; i++, startDate.add(1, 'days')) {
-        generateDay(dailyPlans, i, startDate.toDate(), RandomRecipeService, DEFAULT_RECIPE_STATE);
+        generateDay(dailyPlans, i, startDate.toDate(), RandomRecipeService, RecipeService, DEFAULT_RECIPE_STATE, false);
     }
     // console.log('after loop', startDate, interval.startDate);
 }
@@ -56,12 +89,13 @@ function generatePlan(interval, globalPlan, dailyPlans, RandomRecipeService) {
 //- remove a day from planning
 //- change a recipe for a new one
 //check for date changes
-function regeneratePlan(interval, globaPlan, dailyPlans, RandomRecipeService) {
+function regeneratePlan(interval, globaPlan, dailyPlans, RandomRecipeService, RecipeService) {
     //status changes (RECIPE_STATES)
+    console.log('regenerate');
     for (var i = 0; i < dailyPlans.length; i++) {
         if (dailyPlans[i] && dailyPlans[i].statusIndex === ANOTHER_RECIPE) {
             console.log('random for ', dailyPlans[i].recipe.title);
-            getRandomRecipe(dailyPlans, i, RandomRecipeService, ANOTHER_RECIPE);
+            getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, ANOTHER_RECIPE, true);
         }
     }
     //check for date changes TODO
@@ -178,8 +212,7 @@ angular.module('planning').controller('GeneratePlanController', ['$scope', '$roo
         $scope.opts = CALENDAR_OPTIONS;
 
         //Watch for date changes
-        $rootScope.$on('interval.change', function(event, interval){
-            console.log('rootscope.on', event, interval);
+        $rootScope.$on('interval.change', function(event, interval) {
             $scope.date = interval;
         });
         // $scope.$watch('date', function(newDate) {

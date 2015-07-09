@@ -1,6 +1,6 @@
 'use strict';
 
-var publicStates = ['home', 'authentication.signup', 'authentication.signin', 'password.forgot', 'password.reset', 'password.reset.invalid', 'password.reset.success', 'password.reset.form'];
+var publicStates = ['top.home', 'top.authentication.signup', 'top.authentication.signin', 'top.password.forgot', 'top.password.reset', 'top.password.reset.invalid', 'top.password.reset.success', 'top.password.reset.form'];
 
 angular.module('planning').run(['$rootScope', '$state', '$modal', 'Authentication',
     function($rootScope, $state, $modal, Authentication) { //http://plnkr.co/edit/Qi1UDcFgTEeJmKa4liK2?p=preview
@@ -22,7 +22,7 @@ angular.module('planning').run(['$rootScope', '$state', '$modal', 'Authenticatio
                 };
                 console.log('params', params);
                 evt.preventDefault();
-                $state.go('authentication.signin');
+                $state.go('top.authentication.signin');
                 return;
             }
 
@@ -36,8 +36,8 @@ angular.module('planning').run(['$rootScope', '$state', '$modal', 'Authenticatio
                 if (fromState.name === '' || fromState.name === toState.proxy.external) {
                     // Visiting directly via URL or from the external state,
                     // redirect to external (full) state.
-                    // $state.go(toState.proxy.external, toStateParams); // PINTEREST behaviour
-                    $state.go(toState.proxy.internal, toStateParams);
+                    $state.go(toState.proxy.external, toStateParams); // PINTEREST behaviour
+                    // $state.go(toState.proxy.internal, toStateParams);
                 } else {
                     // Visiting from another state, redirect to internal (modal) state
                     $state.go(toState.proxy.internal, toStateParams);

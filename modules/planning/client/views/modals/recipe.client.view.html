@@ -32,7 +32,7 @@
                 </div>
                 <div flex-sm="100" flex="66" flex-gt-md="100">
                     <div ng-repeat="instruction in recipe.instructions | orderBy: '+order'">
-                        {{instruction.order + 1}}.
+                        {{instruction.order}}.
                         <span ng-if="!!instruction.for_what" class="instruction-for">{{instruction.for_what}}</span> {{instruction.text}}
                     </div>
                 </div>

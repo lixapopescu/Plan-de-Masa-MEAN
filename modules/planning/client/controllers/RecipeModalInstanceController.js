@@ -8,7 +8,7 @@ var path = '/';
 angular.module('planning').controller('RecipeModalInstanceController', ['$http', '$scope', 'Recipe', 'recipe', '$stateParams', 
     function($http, $scope, Recipe, recipe, $stateParams) {
 
-        console.log('RecipeModalInstanceController', $scope.user);
+        console.log('RecipeModalInstanceController');
         if (!!recipe) {
             //modal display
             $scope.recipe = recipe;
@@ -23,7 +23,7 @@ angular.module('planning').controller('RecipeModalInstanceController', ['$http',
                 },
                 function(data) {
                     // console.log('data', data);
-                    $scope.recipe = data;
+                    $scope.recipe = data.recipe;
                     console.log('recipe', $scope.recipe);
                 },
                 function(err) {

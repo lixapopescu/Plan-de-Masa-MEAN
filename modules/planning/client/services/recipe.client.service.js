@@ -8,9 +8,9 @@ angular.module('planning').factory('Recipe', ['$resource',
                 method: 'GET',
                 transformResponse: function(data, header) {
                     // console.log('in list factory', data, header)
-                    data = JSON.parse(data).recipe;
-                    if (!data.image) data.image = data.origin.image;
-                    return data;
+                    data = JSON.parse(data);
+                    if (!data.recipe.image) data.recipe.image = data.recipe.origin.image;
+                    return mixinRecipe(data);
                 }
             },
             delete: {

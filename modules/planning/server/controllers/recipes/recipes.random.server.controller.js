@@ -62,26 +62,28 @@ function generateRandomRecipe(req, res){
 }
 
 //req parameters: year, month, day, index
-//gets current recipe for date or generates & upserts a random one
+//generates & upserts a random recipe
 exports.random = function(req, res) {
     // console.log('random recipes.random.server.controller', req.params.year, req.params.month, req.params.day, req.params.index);
 
-    Planning.findOne({
-        date: Utils.getDateFromString(req.params.year, req.params.month, req.params.day),
-        username: req.user.username
-    }, function (err, plan){
-        if (!err) {
-            //if didn't find any planning for the date+user => generate random
-            if (!plan){
-                generateRandomRecipe(req, res);
-            }
-            else {
-                res.json(plan);
-            }
-        } else {
-                res.status(400).send({
-                    message: errorHandler.getErrorMessage(err)
-                });
-            }
-    });
+    generateRandomRecipe(req, res);
+
+    // Planning.findOne({
+    //     date: Utils.getDateFromString(req.params.year, req.params.month, req.params.day),
+    //     username: req.user.username
+    // }, function (err, plan){
+    //     if (!err) {
+    //         //if didn't find any planning for the date+user => generate random
+    //         if (!plan){
+    //             generateRandomRecipe(req, res);
+    //         }
+    //         else {
+    //             res.json(plan);
+    //         }
+    //     } else {
+    //             res.status(400).send({
+    //                 message: errorHandler.getErrorMessage(err)
+    //             });
+    //         }
+    // });
 };
