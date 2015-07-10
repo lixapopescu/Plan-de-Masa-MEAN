@@ -21,7 +21,7 @@ exports.findOne = function(req, res) {
         Planning.findOne({
                 date: Utils.getDateFromString(req.params.year, req.params.month, req.params.day),
                 'recipe.title': decodeRecipeUrl(req.params.recipe_url),
-                // username: req.user.username,
+                username: req.user.username,
                 $or: [{
                     archived: 0
                 }, {
@@ -44,7 +44,7 @@ exports.findOne = function(req, res) {
         Planning.findOne({
                 date: Utils.getDateFromString(req.params.year, req.params.month, req.params.day),
                 // 'recipe.title': decodeRecipeUrl(req.params.recipe_url),
-                // username: req.user.username,
+                username: req.user.username,
                 $or: [{
                     archived: 0
                 }, {

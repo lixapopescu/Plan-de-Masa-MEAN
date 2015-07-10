@@ -38,8 +38,8 @@ function getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, reci
                 day: dailyPlans[i].dateJson.day,
                 recipe_url: '_'
             }, function(data) {
-                console.log(data);
-                if (!data) {
+                // console.log(data);
+                if (!data._id) {
                     // console.log('searched and not found');
                     RandomRecipeService.get({
                             year: dailyPlans[i].dateJson.year,
@@ -91,10 +91,11 @@ function generatePlan(interval, globalPlan, dailyPlans, RandomRecipeService, Rec
 //check for date changes
 function regeneratePlan(interval, globaPlan, dailyPlans, RandomRecipeService, RecipeService) {
     //status changes (RECIPE_STATES)
-    console.log('regenerate');
+    // console.log('regenerate');
     for (var i = 0; i < dailyPlans.length; i++) {
         if (dailyPlans[i] && dailyPlans[i].statusIndex === ANOTHER_RECIPE) {
             console.log('random for ', dailyPlans[i].recipe.title);
+            dailyPlans[i].recipe.imageDefault = null;
             getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, ANOTHER_RECIPE, true);
         }
     }
