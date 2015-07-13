@@ -62,6 +62,9 @@ function fillCustomAttributesPlan(dailyPlan, today) {
     dailyPlan.recipe.ingredientNumber = _.union(_.pluck(ingredients, 'name')).length;
 
     dailyPlan.recipe.url = getRecipeUrl(dailyPlan.recipe.title);
+    if (!dailyPlan.recipe.imageDefault){
+        dailyPlan.recipe.imageDefault = (dailyPlan.picture) ? dailyPlan.picture.def : dailyPlan.recipe.origin.image;
+    }
 
     dailyPlan.imageVisible = true;
     // dailyPlan.recipe.image = dailyPlan.recipe.image ? (recipeImagesPath + dailyPlan.recipe.image) : dailyPlan.recipe.origin.image; //my photo has priority
