@@ -27,6 +27,7 @@
 		"getDistanceLabel": true,
 		"mixinRecipe": true,
 		"mixinRecipes": true,
+		"mixinFixedPlanningHistory": true,
 		"moment": true,
 		"showToastUndo": true,
 		"showToastSimple": true,

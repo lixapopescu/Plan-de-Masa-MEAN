@@ -5,6 +5,7 @@ var daysString = 'zile';
 var toastDelay = 6000; //ms
 var toastPosition = 'bottom left';
 var toastUndoMessage = 'M-am răzgândit';
+var DATE_FORMAT = 'dd DD MMMM';
 
 var CALENDAR_OPTIONS = {
     locale: {
@@ -18,13 +19,10 @@ var CALENDAR_OPTIONS = {
         firstDay: 1,
         monthNames: ['Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie',
             'Octombrie', 'Noiembrie', 'Decembrie'
-        ],
-        cb: function(x, y, z){
-            console.log('callback', x, y, z);
-        }
+        ]
 
     },
-    format: 'dd DD MMMM',
+    format: DATE_FORMAT,
     ranges: {
         'De azi': [moment(), moment().add(6, 'days')],
         'De mâine': [moment().add(1, 'days'), moment().add(7, 'days')],

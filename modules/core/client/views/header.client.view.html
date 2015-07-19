@@ -49,7 +49,13 @@
                         <md-menu-item>
                             <md-button aria-label="Planificarea re&#355;etelor" ng-click="gotoRecipePlanning($state, interval)">
                                 <md-icon md-menu-origin><i class="mdi mdi-database"></i></md-icon>
-                                Planul meu de mas&#259;
+                                Planul curent
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button aria-label="Istoricu planurilor" ng-click="gotoPlanHistory($state)">
+                                <md-icon md-menu-origin><i class="mdi mdi-history"></i></md-icon>
+                                Toate planurile
                             </md-button>
                         </md-menu-item>
                         <md-menu-divider></md-menu-divider>
@@ -60,11 +66,11 @@
                             </md-button>
                         </md-menu-item>
                         <md-menu-item>
-                            <md-button href="/api/auth/signout" target="_self" layout="row" layout-align="start center">
+                            <md-button aria-label="Deconectare" href="/api/auth/signout" target="_self" layout="row" layout-align="start center">
                                 <div>
                                     <md-icon md-menu-origin><i class="mdi mdi-logout"></i></md-icon>
                                 </div>
-                                <div>Log out</div>
+                                <div>Deconectare</div>
                             </md-button>
                         </md-menu-item>
                     </md-menu-content>

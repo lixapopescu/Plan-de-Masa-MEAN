@@ -15,6 +15,10 @@ function gotoSettings($state) {
     $state.go('top.settings.profile');
 }
 
+function gotoPlanHistory($state){
+    $state.go('top.planHistory');
+}
+
 angular.module('core').controller('HeaderController', ['$scope', '$state', 'Authentication', 'Menus',
     function($scope, $state, Authentication, Menus) {
         // Expose view variables
@@ -22,6 +26,7 @@ angular.module('core').controller('HeaderController', ['$scope', '$state', 'Auth
         $scope.authentication = Authentication;
         $scope.gotoRecipePlanning = gotoRecipePlanning;
         $scope.gotoSettings = gotoSettings;
+        $scope.gotoPlanHistory = gotoPlanHistory;
 
         // Get the topbar menu
         $scope.menu = Menus.getMenu('topbar');

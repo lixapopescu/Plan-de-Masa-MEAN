@@ -11,5 +11,6 @@ var _ = require('lodash');
 module.exports = _.extend(
 	require('./recipes/recipes.weekly.server.controller'),
 	require('./recipes/recipes.daily.server.controller'),
-	require('./recipes/recipes.random.server.controller')
+	require('./recipes/recipes.random.server.controller'),
+	require('./recipes/recipes.planning.server.controller')
 );

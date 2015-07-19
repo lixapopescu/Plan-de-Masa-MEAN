@@ -35,8 +35,6 @@ module.exports = {
 		options: {
 			service: process.env.MAILER_SERVICE_PROVIDER || 'SendGrid',
 			auth: {
-				// user: process.env.MAILER_EMAIL_ID || 'plandemasa@gmail.com',
-				//pass: process.env.MAILER_PASSWORD || 'lixa200399'
 				user: 'lixa',
 				pass: 'lixa200399'
 			}

@@ -1,0 +1,12 @@
+<!-- <md-sidenav md-is-locked-open="$mdMedia('gt-sm')" md-component-id="left" class="md-whiteframe-z2"> -->
+    <div ng-repeat="plan in plans">
+        <md-button class="no-capitalize" ui-sref="top.plan.detail({start_year: plan.interval.startDate.year(),
+                         start_month: plan.interval.startDate.month() + 1,
+                         start_day: plan.interval.startDate.date(),
+                         end_year: plan.interval.endDate.year(),
+                         end_month: plan.interval.endDate.month() + 1,
+                         end_day: plan.interval.endDate.date()})">
+            {{plan.interval.startDate.format(DATE_FORMAT)}} - {{plan.interval.endDate.format(DATE_FORMAT)}} ({{plan.days.length}} re&#355;ete)
+        </md-button>
+    </div>
+<!-- </md-sidenav> -->

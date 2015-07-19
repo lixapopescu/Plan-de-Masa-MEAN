@@ -62,7 +62,7 @@ function fillCustomAttributesPlan(dailyPlan, today) {
     dailyPlan.recipe.ingredientNumber = _.union(_.pluck(ingredients, 'name')).length;
 
     dailyPlan.recipe.url = getRecipeUrl(dailyPlan.recipe.title);
-    if (!dailyPlan.recipe.imageDefault){
+    if (!dailyPlan.recipe.imageDefault) {
         dailyPlan.recipe.imageDefault = (dailyPlan.picture) ? dailyPlan.picture.def : dailyPlan.recipe.origin.image;
     }
 
@@ -84,4 +84,22 @@ function mixinRecipes(dailyPlans) {
         // console.log(dailyPlan);
     });
     return dailyPlans;
+}
+
+function mixinFixedPlanning(fixedplan) {
+    fixedplan.interval.startDate = moment(fixedplan.interval.startDate);
+    fixedplan.interval.endDate = moment(fixedplan.interval.endDate);
+    // fixedplan.interval.startDateJson = fixedplan.interval.startDate.toJson();
+    // fixedplan.interval.endDateJson = fixedplan.interval.endDate.toJson();
+}
+
+/**
+ * Post-processing for planning history after retrieving from server
+ */
+function mixinFixedPlanningHistory(fixedPlans) {
+    // console.log('mixinFixedPlanningHistory');
+    _.each(fixedPlans, function(fixedplan) {
+        fixedplan = mixinFixedPlanning(fixedplan);
+    });
+    return fixedPlans;
 }
