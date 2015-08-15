@@ -31,6 +31,11 @@ angular.module('planning').config(['$stateProvider', '$stickyStateProvider',
                 templateUrl: 'modules/planning/views/display/plan.history.client.view.html',
                 controller: 'PlanHistoryController'
             })
+            .state('top.recipeAdd',{
+                url:'/retete/adauga',
+                templateUrl:'modules/planning/views/admin/recipe.add.client.view.html',
+                controller: 'RecipeAddController'
+            })
             .state('retetaModal', {
                 url: '/reteta/:year/:month/:day/:url',
                 controller: 'RecipeModalInstanceController',

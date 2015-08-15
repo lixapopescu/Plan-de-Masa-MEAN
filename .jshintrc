@@ -32,6 +32,7 @@
 		"showToastUndo": true,
 		"showToastSimple": true,
 		"CALENDAR_OPTIONS": true,
+		"DATE_FORMAT": true,
 		"getInterval": true
 	},
 	"predef": [ // Extra globals.

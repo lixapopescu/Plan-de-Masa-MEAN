@@ -7,5 +7,5 @@ public/lib
 .bower-*/
 .idea/
 uploads
-modules/users/client/img/profie/uploads
-.config/env
+modules/users/client/img/profile/uploads
+config/env/

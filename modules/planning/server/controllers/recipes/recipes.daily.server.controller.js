@@ -12,6 +12,7 @@ var //_ = require('lodash'),
     errorHandler = require(path.resolve('./modules/core/server/controllers/errors.server.controller')),
     mongoose = require('mongoose'),
     Utils = require(path.resolve('./modules/core/server/model/utils')),
+    Recipes = mongoose.model('Recipes'),
     Planning = mongoose.model('Planning');
 
 
@@ -92,4 +93,13 @@ exports.deleteOne = function(req, res) {
             });
         }
     });
+};
+
+exports.save = function(req, res) {
+    console.log('save recipe, just recipe, no date');
+    console.log(req.body.recipe);
+    if (req.body.recipe) {
+        Recipes.save(req.body.recipe);
+    }
+    res.send('ok');
 };

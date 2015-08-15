@@ -1,4 +1,24 @@
 <div class="noselect" ng-class="{weekend: dailyPlan.weekend}">
+    <div ng-if="autocomplete.enabled">
+        <!--         <md-autocomplete 
+        md-no-cache="autocomplete.noCache" 
+        md-selected-item="autocomplete.selectedItem" 
+        md-search-text-change="autocomplete.searchTextChange(autocomplete.searchText)" 
+        md-search-text="autocomplete.searchText" 
+        md-selected-item-change="autocomplete.selectedItemChange(item)" 
+        md-items="item in autocomplete.querySearch(autocomplete.searchText)" 
+        md-item-text="item.display" 
+        md-min-length="0" 
+        placeholder="Etichta sau reteta">
+            <md-item-template>
+                <span md-highlight-text="autocomplete.searchText" md-highlight-flags="^i">{{item.display}}</span>
+            </md-item-template>
+            <md-not-found>
+                No matches found for "{{autocomplete.searchText}}".
+            </md-not-found>
+        </md-autocomplete> -->
+
+    </div>
     <picture>
         <source media="(max-width:620px)" ng-srcset="{{dailyPlan.recipe.picture.sm}}" />
         <source media="(min-width:620px) and (max-width:960px)" ng-srcset="{{dailyPlan.recipe.picture.md}}" />

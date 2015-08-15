@@ -14,4 +14,6 @@ module.exports = function(app) {
 	app.route('/api/recipes/:year/:month/:day/:recipe_url').delete(recipes.deleteOne);
 	app.route('/api/recipes/random/:index/:year/:month/:day').get(recipes.random);
 	app.route('/api/recipes/:id').get(recipes.findById);
+	app.route('/api/recipes/').put(recipes.save);
+	app.route('/api/labels').get(recipes.getRecipeLabels);
 };
