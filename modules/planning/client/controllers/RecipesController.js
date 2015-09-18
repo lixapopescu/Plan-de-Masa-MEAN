@@ -69,6 +69,8 @@ angular.module('planning').controller('RecipesController', ['$scope', '$rootScop
                 //handle err
             });
 
+        $scope.thisLabel = $scope.labels;
+
 
         var self = this;
         $scope.selectedLabels = [];
@@ -83,6 +85,7 @@ angular.module('planning').controller('RecipesController', ['$scope', '$rootScop
         function selectedItemChange(item) {
             $log.info('Item changed to ' + JSON.stringify(item));
             // $scope.selectedLabels.push(item);
+            $scope.thisLabel.pull(item);
         }
 
         self.selectedItemChange = selectedItemChange;
