@@ -6,11 +6,26 @@ var NO_RECIPE = 1;
 var ANOTHER_RECIPE = 2;
 var DEFAULT_RECIPE_STATE = OK_RECIPE;
 
+/**
+ * Create filter function for a query string. Match anywhere in the string (>=0 condition)
+ */
+function createFilterFor(query) {
+  var lowercaseQuery = angular.lowercase(query);
+  return function filterFn(state) {
+    return (state.value.indexOf(lowercaseQuery) >= 0);
+  };
+}
+
 //save a random recipe
 function saveRandomRecipe(dailyPlans, i, data, recipeStatus) {
     // console.log('i+dta', i, data);
     dailyPlans[i] = data;
     dailyPlans[i].statusIndex = recipeStatus;
+    dailyPlans[i].filters = {
+      selectedItem: null,
+      searchText: null,
+      selectedLabels: []
+    };
 }
 
 //closure function to access loop index, which is outside the promise
@@ -85,7 +100,7 @@ function generatePlan(interval, globalPlan, dailyPlans, RandomRecipeService, Rec
     // console.log('after loop', startDate, interval.startDate);
 }
 
-//generate plan after changes made by the user: 
+//generate plan after changes made by the user:
 //- remove a day from planning
 //- change a recipe for a new one
 //check for date changes
@@ -103,7 +118,7 @@ function regeneratePlan(interval, globaPlan, dailyPlans, RandomRecipeService, Re
     // if (interval.startDate != globalPlan.st)
 }
 
-//de-archive recipe 
+//de-archive recipe
 function undeleteRecipe() {
     console.log('undelete TODO');
 }
@@ -173,8 +188,8 @@ function savePlan(interval, dailyPlans, RecipeService, mdToast, state) {
 
 //RecipeService = factory for recipe on single day
 //recipes = state parameter passed to modal
-angular.module('planning').controller('GeneratePlanController', ['$scope', '$rootScope', '$mdToast', '$state', 'RandomRecipe', 'Recipe', 'Authentication',
-    function($scope, $rootScope, $mdToast, $state, RandomRecipe, Recipe, Authentication) {
+angular.module('planning').controller('GeneratePlanController', ['$scope', '$rootScope', '$mdToast', '$state', '$log', 'RandomRecipe', 'Recipe', 'Authentication', 'Labels',
+    function($scope, $rootScope, $mdToast, $state, $log, RandomRecipe, Recipe, Authentication, Labels) {
         // console.log('GeneratePlanController');
 
         $scope.dailyPlans = [];
@@ -216,10 +231,56 @@ angular.module('planning').controller('GeneratePlanController', ['$scope', '$roo
         $rootScope.$on('interval.change', function(event, interval) {
             $scope.date = interval;
         });
-        // $scope.$watch('date', function(newDate) {
-        //     console.log('New date set: ', newDate);
-        //     // generatePlan($scope.date, $scope.globalPlan, $scope.dailyPlans, $scope.RandomRecipeService);
-        // }, false);
+
+        /**
+         * Retrieve labels RESTful API through Angular service 'Labels'
+         * @param  {Query Parameters} {}       Query all labels available
+         * @return {autocomplete.labels}          Fill in labels for autocomplete
+         */
+          Labels.query({},
+            function (data) {
+              $scope.autocomplete.labels = data;
+            },
+            function (err) {
+              //handle err
+            });
+
+        /**
+         * Autocomplete object for use in md-autocomplete. Groups all general settings
+         * @type {Json}
+         */
+        $scope.autocomplete = {
+          enabled: true,
+          // selectedItem: null,
+          // searchText: null,
+          querySearch: querySearch,
+        //  selectedItemChange: selectedItemChange 
+          // selectedLabels: []
+        };
+
+        /**
+         * Called each time an item is added in autocomplete
+         * @param  {[type]} item [description]
+         * @return {[type]}      [description]
+         */
+        function selectedItemChange(item) {
+          $log.info($scope.dailyPlans);
+          // $log.info('selectedLabels ' + $scope.autocomplete.selectedLabels.length);
+          // var obj = $scope.autocomplete.selectedLabels[0];
+          // if (obj) $log.info('name: ' + obj['name']);
+          // if (item) {
+          //   $log.info('Item changed to ' + JSON.stringify(item));
+          //   if (item.$$hashKey)
+          //     $log.info('Used before ' + item.name);
+          // }
+        }
+
+        /**
+         * Generate autocomplete query.
+         */
+        function querySearch(query) {
+          return query ? $scope.autocomplete.labels.filter(createFilterFor(query)) : [];
+        }
 
     }
 ]);

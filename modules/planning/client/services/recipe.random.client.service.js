@@ -1,6 +1,6 @@
 'use strict';
 
-// Singular service used for communicating with the users REST endpoint
+// Singular service used for communicating with the planning REST endpoint
 angular.module('planning').factory('RandomRecipe', ['$resource',
     function($resource) {
         return $resource('/api/recipes/random/:index/:year/:month/:day', {}, {

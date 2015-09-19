@@ -8,7 +8,7 @@ function mixinLabels(data) {
     return data;
 }
 
-// Recipe Labels service used for communicating with the users REST endpoint
+// Recipe Labels service used for communicating with the planning REST endpoint
 angular.module('planning').factory('Labels', ['$resource',
     function($resource) {
         return $resource('api/labels', {}, {

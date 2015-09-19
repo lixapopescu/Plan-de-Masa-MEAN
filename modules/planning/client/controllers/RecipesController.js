@@ -1,17 +1,7 @@
 'use strict';
 
-/**
- * Create filter function for a query string. Match anywhere in the string (>=0 condition)
- */
-function createFilterFor(query) {
-  var lowercaseQuery = angular.lowercase(query);
-  return function filterFn(state) {
-    return (state.value.indexOf(lowercaseQuery) >= 0);
-  };
-}
-
-angular.module('planning').controller('RecipesController', ['$scope', '$rootScope', '$stateParams', '$q', '$timeout', '$state', '$log', 'Recipes', 'Labels',
-  function ($scope, $rootScope, $stateParams, $q, $timeout, $state, $log, Recipes, Labels) {
+angular.module('planning').controller('RecipesController', ['$scope', '$rootScope', '$stateParams', '$q', '$timeout', '$state', 'Recipes',
+  function ($scope, $rootScope, $stateParams, $q, $timeout, $state, Recipes) {
     console.log('in RecipesController', $stateParams, $scope.$id);
 
     /**
@@ -41,19 +31,6 @@ angular.module('planning').controller('RecipesController', ['$scope', '$rootScop
         //handle error
       });
 
-  /**
-   * Retrieve labels RESTful API through Angular service 'Label'
-   * @param  {Query Parameters} {}       Query all labels available
-   * @return {autocomplete.labels}          Fill in labels for autocomplete
-   */
-    Labels.query({},
-      function (data) {
-        $scope.autocomplete.labels = data;
-      },
-      function (err) {
-        //handle err
-      });
-
     /**
      * Watch interval change on date-picker. Necessary because the date-picker snippet is in another view
      * @return {Moment}                   Updates the date object from $scope
@@ -66,41 +43,6 @@ angular.module('planning').controller('RecipesController', ['$scope', '$rootScop
     $scope.getDistanceLabel = getDistanceLabel;
     // $scope.changeInterval = changeInterval;
 
-    /**
-     * Autocomplete object for use in md-autocomplete. Groups all general settings
-     * @type {Json}
-     */
-    $scope.autocomplete = {
-      readonly: false,
-      selectedItem: null,
-      searchText: null,
-      querySearch: querySearch,
-      selectedItemChange: selectedItemChange,
-      selectedLabels: []
-    };
-
-    /**
-     * Called each time an item is added in autocomplete
-     * @param  {[type]} item [description]
-     * @return {[type]}      [description]
-     */
-    function selectedItemChange(item) {
-      $log.info('selectedLabels ' + $scope.autocomplete.selectedLabels.length);
-      // var obj = $scope.autocomplete.selectedLabels[0];
-      // if (obj) $log.info('name: ' + obj['name']);
-      // if (item) {
-      //   $log.info('Item changed to ' + JSON.stringify(item));
-      //   if (item.$$hashKey)
-      //     $log.info('Used before ' + item.name);
-      // }
-    }
-
-    /**
-     * Generate autocomplete query.
-     */
-    function querySearch(query) {
-      return query ? $scope.autocomplete.labels.filter(createFilterFor(query)) : [];
-    }
 
   }
 ]);

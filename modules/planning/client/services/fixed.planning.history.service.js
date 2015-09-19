@@ -1,6 +1,6 @@
 'use strict';
 
-// Recipes service used for communicating with the users REST endpoint
+// Recipes service used for communicating with the planning REST endpoint
 angular.module('planning').factory('FixedPlanningHistory', ['$resource',
     function($resource) {
         return $resource('api/fixedplanning', {}, {

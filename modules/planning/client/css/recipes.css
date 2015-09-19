@@ -103,3 +103,7 @@
 .g-hover-card .weekend {
     background-color: #ffb442;
 }
+
+.g-hover-card .weekend .md-chips{
+    background-color: white !important;
+}

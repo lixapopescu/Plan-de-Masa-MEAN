@@ -5,7 +5,7 @@ var daysString = 'zile';
 var toastDelay = 6000; //ms
 var toastPosition = 'bottom left';
 var toastUndoMessage = 'M-am răzgândit';
-var DATE_FORMAT = 'dd DD MMMM';
+var DATE_FORMAT = 'dd DD MMM';
 
 var CALENDAR_OPTIONS = {
     locale: {

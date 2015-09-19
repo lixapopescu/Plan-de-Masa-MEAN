@@ -1,24 +1,29 @@
 <div class="noselect" ng-class="{weekend: dailyPlan.weekend}">
-    <div ng-if="autocomplete.enabled">
-        <!--         <md-autocomplete 
-        md-no-cache="autocomplete.noCache" 
-        md-selected-item="autocomplete.selectedItem" 
-        md-search-text-change="autocomplete.searchTextChange(autocomplete.searchText)" 
-        md-search-text="autocomplete.searchText" 
-        md-selected-item-change="autocomplete.selectedItemChange(item)" 
-        md-items="item in autocomplete.querySearch(autocomplete.searchText)" 
-        md-item-text="item.display" 
-        md-min-length="0" 
-        placeholder="Etichta sau reteta">
-            <md-item-template>
-                <span md-highlight-text="autocomplete.searchText" md-highlight-flags="^i">{{item.display}}</span>
-            </md-item-template>
-            <md-not-found>
-                No matches found for "{{autocomplete.searchText}}".
-            </md-not-found>
-        </md-autocomplete> -->
 
+    <div ng-if="autocomplete.enabled">
+      <md-chips ng-model="dailyPlan.filters.selectedLabels"
+      md-autocomplete-snap
+      md-require-match="true">
+        <md-autocomplete
+            md-selected-item="dailyPlan.filters.selectedItem"
+            md-search-text="dailyPlan.filters.searchText"
+            md-items="item in autocomplete.querySearch(dailyPlan.filters.searchText)"
+            md-item-text="item.name"
+            md-selected-item-change="autocomplete.selectedItemChange(dailyPlan.filters.selectedItem)"
+            md-search-text-change="autocomplete.searchTextChange(dailyPlan.filters.searchText)"
+            md-min-length="0"
+            md-select-on-match="true"
+            placeholder="Criterii">
+          <span md-highlight-text="dailyPlan.filters.searchText">{{item.display}} :: {{item.total}}</span>
+        </md-autocomplete>
+        <md-chip-template>
+          <span>
+            {{$chip.display}} <small>(<i>{{$chip.total}}</i>)</small>
+          </span>
+        </md-chip-template>
+      </md-chips>
     </div>
+
     <picture>
         <source media="(max-width:620px)" ng-srcset="{{dailyPlan.recipe.picture.sm}}" />
         <source media="(min-width:620px) and (max-width:960px)" ng-srcset="{{dailyPlan.recipe.picture.md}}" />
