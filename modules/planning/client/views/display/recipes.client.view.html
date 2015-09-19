@@ -1,49 +1,26 @@
 <div data-ng-controller="RecipesController as ctrl">
-<!--         
-      <md-autocomplete
-          md-no-cache="ctrl.noCache"
-          md-selected-item="ctrl.selectedItem"
-          md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-          md-search-text="ctrl.searchText"
-          md-selected-item-change="ctrl.selectedItemChange(item)"
-          md-items="item in ctrl.querySearch(ctrl.searchText)"
-          md-item-text="item.display"
-          md-min-length="0"
-          placeholder="What is your favorite US state?">
-        <md-item-template>
-          <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
-        </md-item-template>
-        <md-not-found>
-          No matches found for "{{ctrl.searchText}}".
-        </md-not-found>
-      </md-autocomplete> -->
 
-      <md-chips ng-model="selectedLabels" 
-                md-autocomplete-snap 
-                md-require-match>
-      <md-autocomplete
-          md-selected-item="ctrl.selectedItem"
-          md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
-          md-search-text="ctrl.searchText"
-          md-selected-item-change="ctrl.selectedItemChange(item)"
-          md-items="item in ctrl.querySearch(ctrl.searchText)"
-          md-item-text="item.display"
-
-          placeholder="Criterii">
-        <md-item-template>
-          <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}} ({{item.total}})</span>
-        </md-item-template>
-<!--         <md-not-found>
-          No matches found for "{{ctrl.searchText}}".
-        </md-not-found>
- -->      </md-autocomplete>
-      <md-chip-template>
-        <span>
-          <strong>{{$chip.display}}</strong>
-          <!-- <em>({{$chip.total}})</em> -->
-        </span>
-      </md-chip-template>
-    </md-chips>
+      <md-chips ng-model="autocomplete.selectedLabels"
+      md-autocomplete-snap
+      md-require-match="true">
+        <md-autocomplete
+            md-selected-item="autocomplete.selectedItem"
+            md-search-text="autocomplete.searchText"
+            md-items="item in autocomplete.querySearch(autocomplete.searchText)"
+            md-item-text="item.name"
+            md-selected-item-change="autocomplete.selectedItemChange(autocomplete.selectedItem)"
+            md-search-text-change="autocomplete.searchTextChange(autocomplete.searchText)"
+            md-min-length="0"
+            md-select-on-match="true"
+            placeholder="Criterii">
+          <span md-highlight-text="autocomplete.searchText">{{item.display}} :: {{item.total}}</span>
+        </md-autocomplete>
+        <md-chip-template>
+          <span>
+            {{$chip.display}} <small>(<i>{{$chip.total}}</i>)</small>
+          </span>
+        </md-chip-template>
+      </md-chips>
 
     <div layout="column" layout-margin layout-fill layout-padding ng-if="dailyPlans">
         <div flex>
