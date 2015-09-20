@@ -29,10 +29,10 @@ function createFilterFor(query) {
  * @param  {RECIPE_STATES} recipeStatus Passed in order to preserve the status of the recipe
  */
 function saveRandomRecipe(dailyPlans, i, data, recipeStatus) {
-  console.log('i+dta', i, data);
+  // console.log('i+dta', i, data);
   var labels = [];
   for (var j in data.recipe.fromRequest.filters) {
-    console.log('j', j, labels[j], data.recipe.fromRequest.filters[j]);
+    // console.log('j', j, labels[j], data.recipe.fromRequest.filters[j]);
     labels[j] = {
       display: data.recipe.fromRequest.filters[j],
       value: data.recipe.fromRequest.filters[j]
@@ -45,7 +45,7 @@ function saveRandomRecipe(dailyPlans, i, data, recipeStatus) {
     searchText: null,
     selectedLabels: labels
   };
-  console.log('dailyPlans[i].filters', dailyPlans[i].filters, data.recipe.fromRequest);
+  // console.log('dailyPlans[i].filters', dailyPlans[i].filters, data.recipe.fromRequest);
 }
 
 /**
@@ -82,7 +82,7 @@ function getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, reci
           filters: getFilters(dailyPlans[i].filters)
         },
         function (data) {
-          console.log('genuine random');
+          // console.log('genuine random');
           saveRandomRecipe(dailyPlans, i, data, recipeStatus);
         },
         function (err) {
@@ -97,7 +97,7 @@ function getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, reci
       }, function (data) {
         // console.log(data);
         if (!data._id) {
-          console.log('searched and not found');
+          // console.log('searched and not found');
           RandomRecipeService.get({
               year: dailyPlans[i].dateJson.year,
               month: dailyPlans[i].dateJson.month,
@@ -112,7 +112,7 @@ function getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, reci
               //callback(err, null);
             });
         } else {
-          console.log('searched and found', data.recipe.title);
+          // console.log('searched and found', data.recipe.title);
           saveRandomRecipe(dailyPlans, i, data, recipeStatus);
         }
       }, function (err) {
@@ -120,7 +120,6 @@ function getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, reci
       });
     }
   })(i);
-  console.log('getRandomRecipe end', dailyPlans[i]);
 }
 
 //generate a recipe for a specific date
@@ -144,6 +143,18 @@ function generatePlan(interval, globalPlan, dailyPlans, RandomRecipeService, Rec
   // console.log('after loop', startDate, interval.startDate);
 }
 
+function removeImage(recipe){
+  console.log('removeImage');
+  recipe.imageDefault = '/assets/defaults/empty.svg';
+  recipe.loading = true;
+  recipe.picture = {
+    sm: "",
+    md: "",
+    lg: "",
+    gt_lg: ""
+  };
+}
+
 //generate plan after changes made by the user:
 //- remove a day from planning
 //- change a recipe for a new one
@@ -153,8 +164,9 @@ function regeneratePlan(interval, globaPlan, dailyPlans, RandomRecipeService, Re
   // console.log('regenerate');
   for (var i = 0; i < dailyPlans.length; i++) {
     if (dailyPlans[i] && dailyPlans[i].statusIndex === ANOTHER_RECIPE) {
+      // dailyPlans[i].recipe.imageDefault = null;
+      removeImage(dailyPlans[i].recipe);
       console.log('random for ', dailyPlans[i].recipe.title, dailyPlans[i]);
-      dailyPlans[i].recipe.imageDefault = null;
       getRandomRecipe(dailyPlans, i, RandomRecipeService, RecipeService, ANOTHER_RECIPE, true);
     }
   }

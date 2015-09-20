@@ -20,7 +20,7 @@ angular.module('planning').factory('RandomRecipe', ['$resource',
           // console.log('in random recipe factory', data);
           data = JSON.parse(data);
           if (!data.recipe.image) data.recipe.image = data.recipe.origin.image;
-          console.log('RandomRecipeService', data.recipe.fromRequest);
+          // console.log('RandomRecipeService', data.recipe.fromRequest);
           return mixinRecipe(data);
         }
       }

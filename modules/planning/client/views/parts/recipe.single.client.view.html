@@ -1,64 +1,88 @@
-<div class="noselect" ng-class="{weekend: dailyPlan.weekend}">
-<!--This file is used both in showing recipes during the generation stage, and in displaying the write-only result of the plan.
+<div class="noselect"
+   ng-class="{weekend: dailyPlan.weekend}">
+  <!--This file is used both in showing recipes during the generation stage, and in displaying the write-only result of the plan.
 The autocomplete on filters whould be enabled only in the controller for the Generating stage-->
-    <div ng-if="autocomplete.enabled">
-      <md-chips ng-model="dailyPlan.filters.selectedLabels"
-      md-autocomplete-snap
-      md-require-match="true">
-        <md-autocomplete
-            md-selected-item="dailyPlan.filters.selectedItem"
-            md-search-text="dailyPlan.filters.searchText"
-            md-items="item in autocomplete.querySearch(dailyPlan.filters.searchText)"
-            md-item-text="item.name"
-            md-selected-item-change="autocomplete.selectedItemChange(dailyPlan.filters.selectedItem)"
-            md-search-text-change="autocomplete.searchTextChange(dailyPlan.filters.searchText)"
-            md-min-length="0"
-            md-select-on-match="true"
-            placeholder="Criterii">
-          <span md-highlight-text="dailyPlan.filters.searchText">{{item.display}} :: {{item.total}}</span>
-        </md-autocomplete>
-        <md-chip-template>
-          <span>
-            {{$chip.display}}
-            <!-- <small>(<i>{{$chip.total}}</i>)</small> -->
-          </span>
-        </md-chip-template>
-      </md-chips>
-    </div>
+  <div ng-if="autocomplete.enabled">
+    <md-progress-linear md-mode="query"
+       ng-if="dailyPlan.recipe.loading"></md-progress-linear>
 
-    <picture>
-        <source media="(max-width:620px)" ng-srcset="{{dailyPlan.recipe.picture.sm}}" />
-        <source media="(min-width:620px) and (max-width:960px)" ng-srcset="{{dailyPlan.recipe.picture.md}}" />
-        <source media="(min-width:960px) and (max-width:1200px)" ng-srcset="{{dailyPlan.recipe.picture.lg}}" />
-        <source media="(min-width:1200px)" ng-srcset="{{dailyPlan.recipe.picture.gt_lg}}" />
-        <img ng-src="{{dailyPlan.recipe.imageDefault}}" alt="{{dailyPlan.recipe.title}}" data-ui-sref="retetaModal({year: dailyPlan.dateJson.year, month:dailyPlan.dateJson.month, day:dailyPlan.dateJson.day, url: dailyPlan.recipe.url, id: dailyPlan.recipe._id, recipe: dailyPlan.recipe})" class="noselect" ng-if="dailyPlan.imageVisible">
-    </picture>
-    <img src="/assets/defaults/beach2530.svg" alt="Zi liber&#259;" ng-if="!dailyPlan.imageVisible || !dailyPlan">
-    <div class="checked" ng-click="toggleStatus(dailyPlan)" ng-if="dailyPlan.statusIndex !== undefined">
-        <i ng-if="dailyPlan.statusIndex == OK_RECIPE" class="mdi mdi-check"></i>
-        <i ng-if="dailyPlan.statusIndex == NO_RECIPE" class="mdi mdi-close"></i>
-        <i ng-if="dailyPlan.statusIndex == ANOTHER_RECIPE" class="mdi mdi-refresh"></i>
-        <i ng-if="!dailyPlan" class="mdi mdi-close"></i>
+    <md-chips ng-model="dailyPlan.filters.selectedLabels"
+       md-autocomplete-snap
+       md-require-match="true">
+      <md-autocomplete md-selected-item="dailyPlan.filters.selectedItem"
+         md-search-text="dailyPlan.filters.searchText"
+         md-items="item in autocomplete.querySearch(dailyPlan.filters.searchText)"
+         md-item-text="item.name"
+         md-selected-item-change="autocomplete.selectedItemChange(dailyPlan.filters.selectedItem)"
+         md-search-text-change="autocomplete.searchTextChange(dailyPlan.filters.searchText)"
+         md-min-length="0"
+         md-select-on-match="true"
+         placeholder="Criterii">
+        <span md-highlight-text="dailyPlan.filters.searchText">{{item.display}} :: {{item.total}}</span>
+      </md-autocomplete>
+      <md-chip-template>
+        <span>
+          {{$chip.display}}
+          <!-- <small>(<i>{{$chip.total}}</i>)</small> -->
+        </span>
+      </md-chip-template>
+    </md-chips>
+  </div>
+
+  <picture>
+    <source media="(max-width:620px)"
+       ng-srcset="{{dailyPlan.recipe.picture.sm}}" ng-if="dailyPlan.recipe.picture.sm"/>
+    <source media="(min-width:620px) and (max-width:960px)"
+       ng-srcset="{{dailyPlan.recipe.picture.md}}" ng-if="dailyPlan.recipe.picture.md"/>
+    <source media="(min-width:960px) and (max-width:1200px)"
+       ng-srcset="{{dailyPlan.recipe.picture.lg}}" ng-if="dailyPlan.recipe.picture.lg"/>
+    <source media="(min-width:1200px)"
+       ng-srcset="{{dailyPlan.recipe.picture.gt_lg}}" ng-if="dailyPlan.recipe.picture.gt_lg"/>
+    <img ng-src="{{dailyPlan.recipe.imageDefault}}"
+       alt="{{dailyPlan.recipe.title}}"
+       data-ui-sref="retetaModal({year: dailyPlan.dateJson.year, month:dailyPlan.dateJson.month, day:dailyPlan.dateJson.day, url: dailyPlan.recipe.url, id: dailyPlan.recipe._id, recipe: dailyPlan.recipe})"
+       class="noselect"
+       ng-if="dailyPlan.imageVisible">
+  </picture>
+  <img src="/assets/defaults/beach2530.svg"
+     alt="Zi liber&#259;"
+     ng-if="!dailyPlan.imageVisible || !dailyPlan">
+  <div class="checked"
+     ng-click="toggleStatus(dailyPlan)"
+     ng-if="dailyPlan.statusIndex !== undefined">
+    <i ng-if="dailyPlan.statusIndex == OK_RECIPE"
+       class="mdi mdi-check"></i>
+    <i ng-if="dailyPlan.statusIndex == NO_RECIPE"
+       class="mdi mdi-close"></i>
+    <i ng-if="dailyPlan.statusIndex == ANOTHER_RECIPE"
+       class="mdi mdi-refresh"></i>
+    <i ng-if="!dailyPlan"
+       class="mdi mdi-close"></i>
+  </div>
+  <div class="user-avatar">
+    <md-button class="circle fab"
+       aria-label="{{getDistanceLabel(dailyPlan)}}">
+      <div ng-repeat="item in getDistanceLabel(dailyPlan) track by $index">
+        <div ng-class="{'focus': ($index==1)}">{{item}}</div>
+      </div>
+    </md-button>
+  </div>
+  <div class="info">
+    <div class="title">
+      <a data-ui-sref="retetaModal({year: dailyPlan.dateJson.year, month:dailyPlan.dateJson.month, day:dailyPlan.dateJson.day, url: dailyPlan.recipe.url, id: dailyPlan.recipe._id, recipe: dailyPlan.recipe})"
+         ng-if="dailyPlan"> {{dailyPlan.recipe.title}}</a>
+      <a href=""
+         ng-if="!dailyPlan">Zi liber&#259;</a>
     </div>
-    <div class="user-avatar">
-        <md-button class="circle fab" aria-label="{{getDistanceLabel(dailyPlan)}}">
-            <div ng-repeat="item in getDistanceLabel(dailyPlan) track by $index">
-                <div ng-class="{'focus': ($index==1)}">{{item}}</div>
-            </div>
-        </md-button>
+    <div class="description"
+       ng-if="dailyPlan">
+      <i class="mdi mdi-account"></i> {{dailyPlan.recipe.persons}}
+      <i class="mdi mdi-cart"></i> 0/{{dailyPlan.recipe.ingredientNumber}}
     </div>
-    <div class="info">
-        <div class="title">
-            <a data-ui-sref="retetaModal({year: dailyPlan.dateJson.year, month:dailyPlan.dateJson.month, day:dailyPlan.dateJson.day, url: dailyPlan.recipe.url, id: dailyPlan.recipe._id, recipe: dailyPlan.recipe})" ng-if="dailyPlan"> {{dailyPlan.recipe.title}}</a>
-            <a href="" ng-if="!dailyPlan">Zi liber&#259;</a>
-        </div>
-        <div class="description" ng-if="dailyPlan">
-            <i class="mdi mdi-account"></i> {{dailyPlan.recipe.persons}}
-            <i class="mdi mdi-cart"></i> 0/{{dailyPlan.recipe.ingredientNumber}}
-        </div>
-    </div>
-    <div class="bottom" hide>
-        <div>{{dailyPlan.dayLabel}} {{dailyPlan.date | date: 'dd/MM'}}</div>
-        stars rating
-    </div>
+  </div>
+  <div class="bottom"
+     hide>
+    <div>{{dailyPlan.dayLabel}} {{dailyPlan.date | date: 'dd/MM'}}</div>
+    stars rating
+  </div>
 </div>
