@@ -1,5 +1,6 @@
 <div class="noselect" ng-class="{weekend: dailyPlan.weekend}">
-
+<!--This file is used both in showing recipes during the generation stage, and in displaying the write-only result of the plan.
+The autocomplete on filters whould be enabled only in the controller for the Generating stage-->
     <div ng-if="autocomplete.enabled">
       <md-chips ng-model="dailyPlan.filters.selectedLabels"
       md-autocomplete-snap
@@ -18,7 +19,8 @@
         </md-autocomplete>
         <md-chip-template>
           <span>
-            {{$chip.display}} <small>(<i>{{$chip.total}}</i>)</small>
+            {{$chip.display}}
+            <!-- <small>(<i>{{$chip.total}}</i>)</small> -->
           </span>
         </md-chip-template>
       </md-chips>

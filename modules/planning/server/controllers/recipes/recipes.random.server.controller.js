@@ -36,7 +36,7 @@ function generateRandomRecipe(req, res) {
 
   recipeQuery.count().exec(function (err, count) {
     var rnd = _.random(0, count - 1);
-    console.log('rnd,count', rnd, count);
+    // console.log('rnd,count', rnd, count);
 
     /**
      * Find a random recipe, non-archived, with lables matching ALL
@@ -56,13 +56,14 @@ function generateRandomRecipe(req, res) {
               year: req.params.year,
               month: req.params.month,
               day: req.params.day,
-              index: req.params.index
+              index: req.params.index,
+              filters: filters
             };
             // console.log('randomrecipe', data);
             //got recipe, now attach to date
-            console.log('user: ', req.user);
+            // console.log('user: ', req.user);
             Planning.findOneAndUpdate({
-              // username: req.user.username,
+              username: req.user.username,
               date: new Date(req.params.year, req.params.month - 1, req.params.day)
             }, {
               recipe: data

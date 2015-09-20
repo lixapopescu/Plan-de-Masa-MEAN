@@ -78,6 +78,7 @@ module.exports = function (grunt) {
 					args: ['--watch config --watch public --watch modules'],
 					nodeArgs: ['--debug'],
 					ext: 'js,html',
+					ignore: ['public/lib/*.js', 'node_modules/**', 'README'],
 					watch: _.union(defaultAssets.server.views, defaultAssets.server.allJS, defaultAssets.server.config)
 				}
 			}
@@ -194,7 +195,7 @@ module.exports = function (grunt) {
 		}
 	});
 
-	// Load NPM tasks 
+	// Load NPM tasks
 	require('load-grunt-tasks')(grunt);
 
 	// Making grunt default to force in order not to break the project.
