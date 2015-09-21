@@ -20,6 +20,8 @@ var FixedPlanningSchema = new Schema({
     username: String
 }, {
     collection: 'fixedplanning'
+}, {
+  safe: {j: 1}
 });
 
 mongoose.model('FixedPlanning', FixedPlanningSchema);

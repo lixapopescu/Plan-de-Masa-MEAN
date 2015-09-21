@@ -11,7 +11,10 @@ angular.module('planning').factory('FixedPlanning', ['$resource',
                     data = JSON.parse(data);
                     return data;
                 }
-            }
+            },
+            update: {
+      				method: 'PUT'
+      			}
         });
     }
 ]);

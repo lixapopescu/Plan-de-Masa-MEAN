@@ -143,15 +143,15 @@ function generatePlan(interval, globalPlan, dailyPlans, RandomRecipeService, Rec
   // console.log('after loop', startDate, interval.startDate);
 }
 
-function removeImage(recipe){
+function removeImage(recipe) {
   console.log('removeImage');
   recipe.imageDefault = '/assets/defaults/empty.svg';
   recipe.loading = true;
   recipe.picture = {
-    sm: "",
-    md: "",
-    lg: "",
-    gt_lg: ""
+    sm: null,
+    md: null,
+    lg: null,
+    gt_lg: null
   };
 }
 
@@ -192,8 +192,10 @@ function deleteRecipe(RecipeService, dailyPlans, i, year, month, day, url, title
     },
     function (data) {
       console.log('after delete');
-      dailyPlans[i] = null;
-      dailyPlans = _.compact(dailyPlans);
+      dailyPlans[i].recipe = {};
+      dailyPlans[i].loading = false;
+      dailyPlans[i].recipe.title = 'Zi liber&#259';
+      // dailyPlans = _.compact(dailyPlans);
       console.log(dailyPlans);
       // showToastUndo(mdToast, 'Am şters reţeta ' + title, undeleteRecipe);
     },

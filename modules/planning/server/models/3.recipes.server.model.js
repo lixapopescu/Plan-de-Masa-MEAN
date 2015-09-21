@@ -60,6 +60,8 @@ var RecipesSchema = new Schema({
 
 }, {
     collection: 'recipes'
+}, {
+  safe: {j: 1}
 });
 
 RecipesSchema.pre('save', function(next) {

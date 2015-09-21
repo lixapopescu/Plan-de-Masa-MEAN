@@ -52,7 +52,7 @@ var UserSchema = new Schema({
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Completează email-ul'],
 		match: [/.+\@.+\..+/, 'Completează cu o adresă de email validă'],
-		unique: true 
+		unique: true
 	},
 	username: {
 		type: String,
@@ -99,6 +99,8 @@ var UserSchema = new Schema({
   	resetPasswordExpires: {
   		type: Date
   	}
+}, {
+  safe: {j: 1}
 });
 
 /**

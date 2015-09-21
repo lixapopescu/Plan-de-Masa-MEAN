@@ -19,6 +19,7 @@ var PlanningSchema = new Schema({
     type: Number,
     default: 0
   },
+  notes: [String],
   recipe: {
     title: {
       type: String,
@@ -81,6 +82,8 @@ var PlanningSchema = new Schema({
 
 }, {
   collection: 'planning'
+}, {
+  safe: {j: 1} //Write concern: journal enabled
 });
 
 PlanningSchema.pre('save', function (next) {

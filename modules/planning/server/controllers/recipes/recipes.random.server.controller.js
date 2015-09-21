@@ -11,7 +11,8 @@ var _ = require('lodash'),
   Recipes = mongoose.model('Recipes'),
   Planning = mongoose.model('Planning');
 
-function buildRecipeQuery(filters){
+function buildRecipeQuery(filters, existingRecipeTitle) {
+  console.log('existingRecipeTitle', existingRecipeTitle);
   var query = Recipes.findOne({
     $or: [{
       archived: 0
@@ -23,20 +24,22 @@ function buildRecipeQuery(filters){
   });
   if (filters) query.where('labels').all(filters);
   //TODO: search for different recipe that the existing one. If only one, return status 300, and on clinet side live as it is
-
+  query.where('title').ne(existingRecipeTitle);
   return query;
 }
 
-function generateRandomRecipe(req, res) {
-  var filters = decodeURI(req.params.filters).split(',');
-  // console.log('filters received ', req.params, filters);
+function getRandomRecipe(req, res, existingRecipeTitle) {
+
   mongoose.set('debug', true);
 
-  var recipeQuery = buildRecipeQuery(filters);
+  var filters = decodeURI(req.params.filters).split(',');
+  // console.log('filters received ', req.params, filters);
 
-  recipeQuery.count().exec(function (err, count) {
+  // var recipeQuery = buildRecipeQuery(filters, existingRecipeTitle);
+
+  buildRecipeQuery(filters, existingRecipeTitle).count().exec(function (err, count) {
     var rnd = _.random(0, count - 1);
-    // console.log('rnd,count', rnd, count);
+    console.log('rnd,count', rnd, count);
 
     /**
      * Find a random recipe, non-archived, with lables matching ALL
@@ -46,27 +49,28 @@ function generateRandomRecipe(req, res) {
      * @param  {[type]} labels: {$all:        filters}        } [description]
      * @return {[type]}         [description]
      */
-    buildRecipeQuery(filters)
+    buildRecipeQuery(filters, existingRecipeTitle)
       .limit(-(rnd + 1)).skip(rnd).limit(1)
       .lean() // to transform MongooseDocument(readonly) to json
-      .exec(function (err, data) {
+      .exec(function (err, randomRecipe) {
+        console.log('randomQuery', err, randomRecipe);
         if (!err) {
-          if (data) {
-            data.fromRequest = {
+          if (randomRecipe) {
+            randomRecipe.fromRequest = {
               year: req.params.year,
               month: req.params.month,
               day: req.params.day,
               index: req.params.index,
               filters: filters
             };
-            // console.log('randomrecipe', data);
+            // console.log('randomrecipe', randomRecipe);
             //got recipe, now attach to date
             // console.log('user: ', req.user);
             Planning.findOneAndUpdate({
               username: req.user.username,
               date: new Date(req.params.year, req.params.month - 1, req.params.day)
             }, {
-              recipe: data
+              recipe: randomRecipe
             }, {
               upsert: true,
               new: true
@@ -83,6 +87,7 @@ function generateRandomRecipe(req, res) {
           }
           //no recipe found
           else {
+            console.log('No recipe found');
             res.status(300).send({
               message: 'No recipe found'
             });
@@ -108,25 +113,18 @@ function generateRandomRecipe(req, res) {
  * @return {Json}   A recipe + the parameters from the request
  */
 exports.random = function (req, res) {
-
-  generateRandomRecipe(req, res);
-
-  // Planning.findOne({
-  //     date: Utils.getDateFromString(req.params.year, req.params.month, req.params.day),
-  //     username: req.user.username
-  // }, function (err, plan){
-  //     if (!err) {
-  //         //if didn't find any planning for the date+user => generate random
-  //         if (!plan){
-  //             generateRandomRecipe(req, res);
-  //         }
-  //         else {
-  //             res.json(plan);
-  //         }
-  //     } else {
-  //             res.status(400).send({
-  //                 message: errorHandler.getErrorMessage(err)
-  //             });
-  //         }
-  // });
+  Planning.findOne({
+    $or: [{
+      archived: 0
+    }, {
+      archived: {
+        $exists: false
+      }
+    }],
+    username: req.user.username,
+    date: new Date(req.params.year, req.params.month - 1, req.params.day)
+  }).exec(function (err, existingRecipe) {
+    if (existingRecipe) getRandomRecipe(req, res, existingRecipe.recipe.title);
+    else getRandomRecipe(req, res, null);
+  });
 };
