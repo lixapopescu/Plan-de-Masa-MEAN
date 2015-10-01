@@ -12,7 +12,7 @@ var _ = require('lodash'),
   Planning = mongoose.model('Planning');
 
 function buildRecipeQuery(filters, existingRecipeTitle) {
-  console.log('existingRecipeTitle', existingRecipeTitle);
+  console.log('existingRecipeTitle', filters, existingRecipeTitle);
   var query = Recipes.findOne({
     $or: [{
       archived: 0
@@ -32,7 +32,7 @@ function getRandomRecipe(req, res, existingRecipeTitle) {
 
   mongoose.set('debug', true);
 
-  var filters = decodeURI(req.params.filters).split(',');
+  var filters = req.params.filters ? decodeURI(req.params.filters).split(',') : null;
   // console.log('filters received ', req.params, filters);
 
   // var recipeQuery = buildRecipeQuery(filters, existingRecipeTitle);
@@ -113,6 +113,7 @@ function getRandomRecipe(req, res, existingRecipeTitle) {
  * @return {Json}   A recipe + the parameters from the request
  */
 exports.random = function (req, res) {
+  console.log('Route: random', req.params);
   Planning.findOne({
     $or: [{
       archived: 0
@@ -124,6 +125,7 @@ exports.random = function (req, res) {
     username: req.user.username,
     date: new Date(req.params.year, req.params.month - 1, req.params.day)
   }).exec(function (err, existingRecipe) {
+    console.log('result ', err, existingRecipe);
     if (existingRecipe) getRandomRecipe(req, res, existingRecipe.recipe.title);
     else getRandomRecipe(req, res, null);
   });

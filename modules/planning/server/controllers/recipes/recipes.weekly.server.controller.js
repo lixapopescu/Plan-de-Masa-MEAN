@@ -14,7 +14,7 @@ var //_ = require('lodash'),
 
 
 exports.find = function(req, res) {
-  console.log('recipes.weekly.server.controller ');
+  console.log('Route recipes.weekly.server.controller ', req.params);
     var username = req.user.username;
     // console.log(Utils.getDateFromString(req.params.start_year, req.params.start_month, req.params.start_day), Utils.getDateFromString(req.params.end_year, req.params.end_month, req.params.end_day));
     var planning = Planning.find({

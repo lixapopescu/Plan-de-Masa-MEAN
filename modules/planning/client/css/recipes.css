@@ -107,3 +107,8 @@
 .g-hover-card .weekend .md-chips{
     background-color: white !important;
 }
+
+/*calendar*/
+md-input-container {
+  padding-bottom: 2px;
+}

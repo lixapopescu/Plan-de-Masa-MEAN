@@ -19,7 +19,7 @@ var PlanningSchema = new Schema({
     type: Number,
     default: 0
   },
-  notes: [String],
+  notes: [String],//comments regarding the current date (eg: )
   recipe: {
     title: {
       type: String,

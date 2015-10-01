@@ -1,7 +1,22 @@
 'use strict';
 
-angular.module('planning').controller('RecipesController', ['$scope', '$rootScope', '$stateParams', '$q', '$timeout', '$state', 'Recipes',
-  function ($scope, $rootScope, $stateParams, $q, $timeout, $state, Recipes) {
+function DialogCalendarController($scope, $mdDialog, date) {
+  $scope.date = date;
+  moment.locale('ro');
+  $scope.opts = CALENDAR_OPTIONS;
+  console.log('$scope.date', $scope.date);
+  $scope.hide = function () {
+    $mdDialog.hide();
+  };
+  $scope.cancel = function () {
+    $mdDialog.cancel();
+  };
+  $scope.answer = function (answer) {
+    $mdDialog.hide(answer);
+  };
+}
+angular.module('planning').controller('RecipesController', ['$scope', '$rootScope', '$stateParams', '$q', '$timeout', '$state', '$mdDialog', 'Recipes',
+  function ($scope, $rootScope, $stateParams, $q, $timeout, $state, $mdDialog, Recipes) {
     console.log('in RecipesController', $stateParams, $scope.$id);
 
     /**
@@ -31,9 +46,46 @@ angular.module('planning').controller('RecipesController', ['$scope', '$rootScop
         //handle error
       });
 
+    //Interval is disabled => hide icon to make place for menu
+    $scope.calendarDisabled = true;
+
+    /**
+     * Options menu
+     */
+    var originatorEv;
+
+    $scope.changeInterval = function () {
+      console.log('changeInterval');
+      $mdDialog.show({
+          controller: DialogCalendarController,
+          templateUrl: '/modules/planning/views/parts/calendar.dialog.client.view.html',
+          parent: angular.element(document.body),
+          targetEvent: originatorEv,
+          clickOutsideToClose: true,
+          ariaLabel: 'Ce plan vrei să vezi acum',
+          locals: {
+            date: $scope.date
+          },
+          ok: 'Gata'
+        })
+        .then(function (answer) {
+          $scope.status = 'You said the information was "' + answer + '".';
+        }, function () {
+          $scope.status = 'You cancelled the dialog.';
+        });
+    };
+    $scope.toggleFreeDaysVisible = function () {
+      $scope.freeDaysVisible = !$scope.freeDaysVisible;
+    };
+    $scope.freeDaysVisible = true;
+    $scope.openMenu = function ($mdOpenMenu, ev) {
+      originatorEv = ev;
+      $mdOpenMenu(ev);
+    };
+
     /**
      * Watch interval change on date-picker. Necessary because the date-picker snippet is in another view
-     * @return {Moment}                   Updates the date object from $scope
+     * @return {Json}     Updates the date object from $scope
      */
     $rootScope.$on('interval.change', function (event, interval) {
       $scope.date = interval;

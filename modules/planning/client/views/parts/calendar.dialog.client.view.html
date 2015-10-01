@@ -1,12 +1,23 @@
 <div data-ng-controller="CalendarController">
-    <form action="">
-        <div>
-            <md-input-container class="md-icon-float">
-                <!-- Use floating label instead of placeholder -->
-                <!-- <label>Plan pentru</label> -->
-                <md-icon md-font-icon="fa-calendar" class="fa fa-lg"></md-icon>
-                <input date-range-picker ng-model="date" type="text" class="date-picker" name="date" options="opts" required aria-label="Alege intervalul pentru plan" />
-            </md-input-container>
-        </div>
-    </form>
+  <form action="">
+    <div>
+      <md-input-container class="md-icon-float">
+        <!-- Use floating label instead of placeholder -->
+        <!-- <label>Plan pentru</label> -->
+        <md-icon md-font-icon="fa-calendar"
+           class="fa fa-lg"
+          ng-if="!calendarDisabled"
+           ></md-icon>
+        <input date-range-picker
+           ng-model="date"
+           type="text"
+           class="date-picker"
+           name="date"
+           options="opts"
+           required
+           ng-disabled="calendarDisabled"
+           aria-label="Alege intervalul pentru plan" />
+      </md-input-container>
+    </div>
+  </form>
 </div>

@@ -4,7 +4,7 @@
 <!--         <md-button class="menu" hide-gt-sm ng-click="ul.toggleList()" aria-label="Lista de retete">
             <md-icon md-font-icon="fa-bars" class="fa"></md-icon>
         </md-button> -->
-        <div class="logobox" hide show-gt-sm layout="row" layout-align="start center">
+        <div class="logobox" show-gt-sm layout="row" layout-align="start center">
             <div><img src="modules/core/img/brand/logo.png" alt="Logo"></div>
             <div class="title">
                 <a href="/">
@@ -15,19 +15,21 @@
         <!--The right side-->
         <div layout="row" layout-align="center center">
             <div data-ng-show="authentication.user">
-                <md-button aria-label="Planurile mele" ng-click="gotoRecipePlanning($state, interval)">
-                    <md-icon><i class="mdi mdi-database"></i></md-icon>
-                    <md-tooltip>
+                <md-button aria-label="Planurile mele" ng-click="gotoRecipePlanning($state, interval)" class="no-capitalize">
+                    <!-- <md-icon><i class="mdi mdi-database"></i></md-icon> -->
+                    Planurile mele
+                    <!-- <md-tooltip>
                         Planurile mele
-                    </md-tooltip>
+                    </md-tooltip> -->
                 </md-button>
             </div>
             <div data-ng-show="authentication.user">
-                <md-button aria-label="Plan nou" data-ui-sref="top.generatePlan">
-                    <md-icon><i class="mdi mdi-plus"></i> </md-icon>
-                    <md-tooltip>
+                <md-button aria-label="Plan nou" data-ui-sref="top.generatePlan" class="no-capitalize">
+                    <!-- <md-icon><i class="mdi mdi-plus"></i> </md-icon> -->
+                    Plan nou
+                    <!-- <md-tooltip>
                         Plan nou
-                    </md-tooltip>
+                    </md-tooltip> -->
                 </md-button>
             </div>
             <div data-ng-hide="authentication.user" layout="row">
